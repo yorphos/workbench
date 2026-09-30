@@ -2,7 +2,7 @@
 
 Interfaces with a considered starting point. Part of the YRP professional toolset.
 
-Theme tokens with light/dark palettes and contrast checks; nine React recipes, eight inspectable states, complete Vite starter exports, registry items, SVG/PNG release materials, and portable handoff kits.
+Theme tokens with light/dark palettes and contrast checks; nine canonical React recipes, thirteen explicit state fixtures, versioned application blueprints, independent app exports, registry items, SVG/PNG release materials, and portable handoff kits.
 
 ## Workspaces and sharing
 
@@ -45,3 +45,26 @@ Browser fixtures use isolated databases/keys and synthetic proxy identity for `y
 ## Source and releases
 
 Original application code, recipes and the explicitly selected `vendor/professional` profile are MIT. DM Sans retains its OFL license; dependencies retain upstream licenses. The remaining private Foundation code is excluded. This independent clone builds without sibling checkouts or access to Foundation. Vendor files are receipt-verified release bundles: change canonical Foundation and synchronize, never hand-edit a bundle. No host configuration, credentials, databases or private history are published.
+
+## Create apps with framework and agents
+
+Workbench consumes the canonical Foundation `professional-creation` release. Preview, screenshots, registry source and generated apps share `creation/ui.js`; fixture callbacks are labelled and never report a real save, acceptance or delivery. Product copy, marks, layout and domain behavior remain app-owned. Each blueprint pins the Foundation version and source digest, screen/recipe versions, states, runtime and callback bindings. The first supported runtime is React + TypeScript + Vite, Node 24, account-owned SQLite and verified Google integration. Other profiles remain unresolved until their adapters are implemented; export refuses unresolved blueprints.
+
+```sh
+npm run workbench -- catalog
+npm run workbench -- inspect --recipe change-review
+npm run workbench -- blueprint --name "Review desk" > app-blueprint.json
+npm run workbench -- validate --blueprint app-blueprint.json
+npm run workbench -- plan --blueprint app-blueprint.json
+npm run workbench -- preview --blueprint app-blueprint.json --out /tmp/review-preview.html
+npm run workbench -- scaffold --blueprint app-blueprint.json --out /tmp/review-desk
+npm run workbench -- adoption --target /tmp/review-desk
+```
+
+The CLI returns JSON. It does not install dependencies, create a repository, enroll a service or deploy. Scaffold accepts an empty directory only. The generated review adapter implements actual create/propose/accept/discard actions, account-owned settings and durable receipts; it is a starting domain adapter to replace for your product. Generated AGENTS.md, RUNNER.toml, migrations, lockfile and prefix-aware tests keep the app independent. Preview HTML is a static fixture with blueprint/release/fixture evidence. Adoption reports changed managed files, rejects edited bundles and requires review; the existing Foundation release gate remains the authority for shared consumer releases.
+
+The Blueprint panel edits routes and bindings. Application ZIP includes the complete supported runtime. Interface demo ZIP is a fictional UI fixture. Blueprint JSON contains no grants or credentials. Read `/r/catalog.json` for discovery and `/r/blueprint-schema.json` for validation contracts. Each [registry item](https://ui.shadcn.com/docs/registry/registry-item-json) includes canonical scoped UI, tokens and local fonts with their license; import its CSS once rather than globally replacing product styles.
+
+Hosted tools are declared in capabilities.json. The receiver requires loopback transport, an Ed25519 service assertion, signed delegation, a currently installed owner grant and a private owner-to-verified-account binding. It never accepts account identity in tool arguments. Only explicit workspace grants permit private inspection, project creation/update, exports and operation recovery. Human and agent actions use the same StudioStore/config/RenderQueue paths. Binary archives use authenticated download handles; bounded text retrieval stays below the gateway envelope. No paid calls, SMTP sends, acceptance or deployment capability is exported.
+
+Live external gateway enrollment follows Foundation #55 and #56; offline and isolated receiver tests do not establish live OpenClaw/Foreman acceptance. See RUNBOOK.md for the closed-default configuration.

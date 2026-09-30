@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "profileVersion": 1,
+  "profileVersion": 2,
   "id": "workbench",
   "app": "workbench",
   "stateful": true,
@@ -12,9 +12,22 @@
       "restoreOwner": "workbench",
       "bindings": [
         {
-          "type": "directory",
+          "type": "sqlite",
           "root": "data",
-          "path": "."
+          "path": "studio.sqlite"
+        }
+      ]
+    },
+    {
+      "id": "account-encryption-keys",
+      "kind": "key",
+      "required": false,
+      "restoreOwner": "workbench",
+      "bindings": [
+        {
+          "type": "key-directory",
+          "root": "data",
+          "path": "keys"
         }
       ]
     }

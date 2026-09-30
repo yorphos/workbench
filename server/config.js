@@ -1,17 +1,15 @@
+import { agentRouteFor } from "./agent.js";
 import {
-  seed,
-  normalize,
   starterFiles,
-  componentSource,
-  recipes,
-  graphic,
-  recipeCSS,
   patternHTML,
-} from "../shared/recipes.js";
-import {embedSVGFonts,starterFonts,starterFontStyles} from "../vendor/professional/server/fonts.js";
+  registry,
+  projectBlueprint,
+} from "./creation.js";
+import { buildScaffold } from "../vendor/professional/creation/scaffold.js";
+import { seed, normalize, recipes, graphic } from "../shared/recipes.js";
+import { embedSVGFonts } from "../vendor/professional/server/fonts.js";
 import { zipSync } from "fflate";
 import {
-  defaultTheme,
   themeCSS,
   documentHTML,
   escapeHTML,
@@ -31,35 +29,22 @@ export const config = {
         kit.data.notes ||
         "Imported project identity. Source: " + kit.manifest.app,
     }),
-  extras: data => {const files={...starterFiles(data),...starterFonts()};files['src/recipe.css']=new TextEncoder().encode(new TextDecoder().decode(files['src/recipe.css'])+'\n'+starterFontStyles);return files;},
-  registry: (id) => {
-    const source = componentSource(id);
-    return source
-      ? {
-          $schema: "https://ui.shadcn.com/schema/registry-item.json",
-          name: id,
-          type: "registry:block",
-          title: recipes.find((r) => r.id === id).name,
-          dependencies: ["react", "react-dom"],
-          files: [
-            {
-              path: `registry/${id}/Recipe.tsx`,
-              type: "registry:file",
-              target: `components/workbench/${id}/Recipe.tsx`,
-              content: source,
-            },
-            {
-              path: `registry/${id}/recipe.css`,
-              type: "registry:file",
-              target: `components/workbench/${id}/recipe.css`,
-              content: recipeCSS,
-            },
-          ],
-        }
-      : null;
-  },
+  extras: starterFiles,
+  registry,
   export(p, format) {
     const d = p.data;
+    if (format === "application")
+      return {
+        body: Buffer.from(zipSync(buildScaffold(projectBlueprint(d)))),
+        mime: "application/zip",
+        name: "application.zip",
+      };
+    if (format === "blueprint")
+      return {
+        body: JSON.stringify(projectBlueprint(d), null, 2),
+        mime: "application/json",
+        name: "app-blueprint.json",
+      };
     if (format === "starter")
       return {
         body: Buffer.from(zipSync(this.extras(d))),
@@ -69,7 +54,11 @@ export const config = {
     if (format === "css")
       return { body: themeCSS(d.theme), mime: "text/css", name: "theme.css" };
     if (format === "svg")
-      return { body: embedSVGFonts(graphic(d)), mime: "image/svg+xml", name: "release.svg" };
+      return {
+        body: embedSVGFonts(graphic(d)),
+        mime: "image/svg+xml",
+        name: "release.svg",
+      };
     if (format === "png")
       return {
         body:
@@ -104,4 +93,20 @@ export const config = {
       text: data.title + "\n" + data.description + "\n" + url,
     };
   },
+};
+
+config.agentRoute = agentRouteFor(config);
+config.onOpen = (store) => {
+  if (
+    store.db
+      .prepare(
+        "SELECT 1 FROM sqlite_master WHERE type='table' AND name='workbench_operations'",
+      )
+      .get()
+  )
+    store.db
+      .prepare(
+        "UPDATE workbench_operations SET status='uncertain' WHERE status='claimed'",
+      )
+      .run();
 };

@@ -1,8 +1,17 @@
-import { useState } from "react";
+import { Recipe } from "../vendor/professional/creation/ui.js";
+import { recipeFixture } from "../vendor/professional/creation/fixture.js";
+import { appThemeVars } from "../vendor/professional/creation/theme.js";
+import {
+  validateBlueprint,
+  getCatalog,
+  upgradeBlueprint,
+} from "../vendor/professional/creation/blueprint.js";
+import "../vendor/professional/creation/ui.css";
+import { useState, useEffect } from "react";
 import { Sun, Moon, Smartphone, Monitor, Code, Check } from "lucide-react";
 import { Studio, Field } from "../vendor/professional/react/studio";
 import type { Product, EditorProps } from "../vendor/professional/react/studio";
-import { themeVars, ThemeFields } from "../vendor/professional/react/theme";
+import { ThemeFields } from "../vendor/professional/react/theme";
 import { contrast } from "../vendor/professional/shared/model.js";
 import {
   seed,
@@ -21,7 +30,9 @@ function Editor({ data, onChange, module, readonly }: EditorProps) {
           onChange={(e) => set("name", e.target.value)}
         />
       </Field>
-      {module === "theme" ? (
+      {module === "blueprint" ? (
+        <BlueprintEditor data={data} onChange={onChange} />
+      ) : module === "theme" ? (
         <>
           <ThemeFields value={data.theme} onChange={(t) => set("theme", t)} />
           <p className="contrast-note">
@@ -93,9 +104,10 @@ function Editor({ data, onChange, module, readonly }: EditorProps) {
                 />
               </Field>
               <p className="handoff-note">
-                Your starter contains this component, semantic CSS, theme
-                tokens, state fixtures, a working Vite app, browser checks, and
-                dependency declarations.
+                Application export contains account-owned records, real
+                create/propose/review actions, an independent lockfile and
+                isolated workflow checks. The interface demo uses fictional
+                fixtures.
               </p>
             </>
           )}
@@ -104,18 +116,102 @@ function Editor({ data, onChange, module, readonly }: EditorProps) {
     </fieldset>
   );
 }
+function BlueprintEditor({
+  data,
+  onChange,
+}: {
+  data: any;
+  onChange: (data: any) => void;
+}) {
+  const [source, setSource] = useState(JSON.stringify(data.blueprint, null, 2)),
+    [error, setError] = useState("");
+  useEffect(
+    () => setSource(JSON.stringify(data.blueprint, null, 2)),
+    [data.blueprint],
+  );
+  const report = validateBlueprint({ ...data.blueprint, theme: data.theme });
+  return (
+    <>
+      <p>
+        Foundation {getCatalog().foundationVersion}. Compose routes and explicit
+        callbacks; the initial domain adapter supports account-owned records and
+        reviewed changes.
+      </p>
+      <Field label="Application blueprint">
+        <textarea
+          rows={18}
+          value={source}
+          onChange={(e) => setSource(e.target.value)}
+        />
+      </Field>
+      <button
+        type="button"
+        onClick={() => {
+          try {
+            const value = JSON.parse(source);
+            onChange({ ...data, blueprint: value });
+            setError("");
+          } catch {
+            setError("Use valid blueprint JSON.");
+          }
+        }}
+      >
+        Apply blueprint draft
+      </button>
+      <button
+        type="button"
+        onClick={() =>
+          onChange({ ...data, blueprint: upgradeBlueprint(data.blueprint) })
+        }
+      >
+        Review current Foundation pin
+      </button>
+      {error && <p role="alert">{error}</p>}
+      <p>
+        {report.valid
+          ? "Blueprint ready for application export."
+          : "Application export requires these changes:"}
+      </p>
+      {[...report.errors, ...report.unresolved].map((v: string) => (
+        <p key={v}>{v}</p>
+      ))}
+      <details>
+        <summary>Agent entry points</summary>
+        <pre>
+          npm run workbench -- catalog{"\n"}npm run workbench -- inspect
+          --recipe change-review{"\n"}npm run workbench -- validate --blueprint
+          app-blueprint.json{"\n"}npm run workbench -- plan --blueprint
+          app-blueprint.json{"\n"}npm run workbench -- scaffold --blueprint
+          app-blueprint.json --out /tmp/my-app
+        </pre>
+        <p>
+          Scaffold writes only to an empty directory. Plan does not install
+          dependencies, deploy, spend or publish. Hosted private tools
+          additionally require an owner grant and service delegation.
+        </p>
+      </details>
+    </>
+  );
+}
 export function Preview({ data, module }: { data: any; module: string }) {
   const [dark, setDark] = useState(false),
     [mobile, setMobile] = useState(false),
     [code, setCode] = useState(false),
-    [notice, setNotice] = useState(""),
+    [trace, setTrace] = useState(""),
+    [selected, setSelected] = useState("release"),
     [query, setQuery] = useState(""),
-    [selected, setSelected] = useState("Release plan"),
-    [step, setStep] = useState(1),
-    [open, setOpen] = useState(true),
     [reverse, setReverse] = useState(false);
-  const state = data.state,
-    rows = ["Release plan", "Research notes", "Client handoff"];
+  const fixture: any = recipeFixture(data.state),
+    rows = fixture.rows.filter((r: any) =>
+      r.name.toLowerCase().includes(query.toLowerCase()),
+    );
+
+  const requested = (name: string) => () =>
+    setTrace(
+      "Fixture callback requested: " +
+        name +
+        ". No application effect was applied.",
+    );
   return (
     <>
       <div className="preview-controls">
@@ -136,7 +232,8 @@ export function Preview({ data, module }: { data: any; module: string }) {
           </button>
         </div>
         <button onClick={() => setCode(!code)}>
-          <Code size={13} /> {code ? "Preview" : "Source"}
+          <Code size={13} />
+          {code ? "Preview" : "Source"}
         </button>
       </div>
       {code ? (
@@ -152,258 +249,40 @@ export function Preview({ data, module }: { data: any; module: string }) {
         />
       ) : (
         <div
-          className={"pattern-frame " + (mobile ? "mobile" : "")}
-          style={themeVars(data.theme, dark)}
+          className="pf-app creation-preview"
+          style={
+            {
+              ...appThemeVars(data.theme, dark),
+              maxWidth: mobile ? 375 : undefined,
+            } as any
+          }
+          data-pf-theme={dark ? "dark" : "light"}
         >
-          <div className="pattern-inner">
-            <div className="preview-label">
-              {recipes.find((r) => r.id === data.recipe)?.name} / {state}
-            </div>
-            <h1>{data.title}</h1>
-            <p>
-              {state === "long" ? data.description.repeat(8) : data.description}
-            </p>
-            {state === "loading" ? (
-              <p role="status">Loading your workspace…</p>
-            ) : state === "empty" ? (
-              <p>No items yet. Create your first project.</p>
-            ) : state === "error" ? (
-              <p role="alert">
-                We couldn’t load this view. Your saved work is safe.
-              </p>
-            ) : (
-              <>
-                {data.recipe === "change-review" && (
-                  <>
-                    <div className="pattern-split">
-                      <section>
-                        <h2>Before</h2>
-                        <p>Weekly update with unresolved notes.</p>
-                      </section>
-                      <section>
-                        <h2>After</h2>
-                        <p>
-                          A clear update with decisions and supporting links.
-                        </p>
-                      </section>
-                    </div>
-                    <div className="actions">
-                      <button
-                        disabled={state === "disabled"}
-                        onClick={() =>
-                          setNotice("Changes accepted in this local example.")
-                        }
-                      >
-                        <Check size={14} /> Accept changes
-                      </button>
-                      <button
-                        onClick={() =>
-                          setNotice("Changes discarded. Original retained.")
-                        }
-                      >
-                        Keep original
-                      </button>
-                    </div>
-                  </>
-                )}
-                {data.recipe === "settings" && (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setNotice("Settings saved in this example.");
-                    }}
-                  >
-                    <Field label="Display name">
-                      <input defaultValue="Studio team" required />
-                    </Field>
-                    <Field label="Notification preference">
-                      <select>
-                        <option>Important updates</option>
-                        <option>All updates</option>
-                      </select>
-                    </Field>
-                    <label>
-                      <input type="checkbox" defaultChecked /> Show detailed
-                      progress
-                    </label>
-                    <button disabled={state === "disabled"}>
-                      Save settings
-                    </button>
-                  </form>
-                )}
-                {data.recipe === "sign-in" && (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      setNotice(
-                        "Account handoff example. Connect your own authentication provider.",
-                      );
-                    }}
-                  >
-                    <Field label="Email">
-                      <input
-                        type="email"
-                        required
-                        placeholder="you@example.com"
-                      />
-                    </Field>
-                    <button disabled={state === "disabled"}>
-                      Continue with your account
-                    </button>
-                    <p>Authentication stays with your application.</p>
-                  </form>
-                )}
-                {data.recipe === "data-table" && (
-                  <>
-                    <Field label="Find a project">
-                      <input
-                        value={query}
-                        onChange={(e) => setQuery(e.target.value)}
-                      />
-                    </Field>
-                    <table>
-                      <caption>Example projects</caption>
-                      <thead>
-                        <tr>
-                          <th>
-                            <button onClick={() => setReverse(!reverse)}>
-                              Project {reverse ? "↓" : "↑"}
-                            </button>
-                          </th>
-                          <th>Status</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {(reverse ? [...rows].reverse() : rows)
-                          .filter((r) =>
-                            r.toLowerCase().includes(query.toLowerCase()),
-                          )
-                          .map((r) => (
-                            <tr key={r}>
-                              <td>{r}</td>
-                              <td>In review</td>
-                            </tr>
-                          ))}
-                      </tbody>
-                    </table>
-                  </>
-                )}
-                {data.recipe === "list-detail" && (
-                  <div className="pattern-split">
-                    <nav aria-label="Example queue">
-                      {rows.map((r) => (
-                        <button key={r} onClick={() => setSelected(r)}>
-                          {r}
-                        </button>
-                      ))}
-                    </nav>
-                    <section>
-                      <h2>{selected}</h2>
-                      <p>
-                        Review its scope, current revision, and outstanding
-                        decisions.
-                      </p>
-                    </section>
-                  </div>
-                )}
-                {data.recipe === "navigation" && (
-                  <>
-                    <button aria-expanded={open} onClick={() => setOpen(!open)}>
-                      Menu
-                    </button>
-                    {open && (
-                      <nav aria-label="Workspace navigation">
-                        {["Overview", "Projects", "Settings"].map((r) => (
-                          <button key={r} onClick={() => setSelected(r)}>
-                            {r}
-                          </button>
-                        ))}
-                      </nav>
-                    )}
-                    <p>Selected: {selected}</p>
-                  </>
-                )}
-                {data.recipe === "multi-step" && (
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      if (step < 3) setStep(step + 1);
-                      else setNotice("Your example project is ready.");
-                    }}
-                  >
-                    <p>Step {step} of 3</p>
-                    <Field
-                      label={
-                        step === 1
-                          ? "Project name"
-                          : step === 2
-                            ? "Primary audience"
-                            : "Success criteria"
-                      }
-                    >
-                      <input key={step} required />
-                    </Field>
-                    <div className="actions">
-                      {step > 1 && (
-                        <button type="button" onClick={() => setStep(step - 1)}>
-                          Back
-                        </button>
-                      )}
-                      <button>{step === 3 ? "Finish" : "Continue"}</button>
-                    </div>
-                  </form>
-                )}
-                {data.recipe === "task-progress" && (
-                  <>
-                    <progress
-                      max="100"
-                      value={state === "success" ? 100 : 60}
-                      aria-label="Task progress"
-                    />
-                    <p>Draft saved. Reviewing the remaining changes.</p>
-                    <div className="actions">
-                      <button
-                        disabled={state === "disabled"}
-                        onClick={() =>
-                          setNotice("Stopped. The saved draft is preserved.")
-                        }
-                      >
-                        Stop task
-                      </button>
-                      <button
-                        onClick={() =>
-                          setNotice(
-                            "Continuation requested in this local example.",
-                          )
-                        }
-                      >
-                        Continue
-                      </button>
-                    </div>
-                  </>
-                )}
-                {data.recipe === "outcome-receipt" && (
-                  <dl>
-                    <dt>Outcome</dt>
-                    <dd>Changes saved</dd>
-                    <dt>Revision</dt>
-                    <dd>4 → 5</dd>
-                    <dt>Evidence</dt>
-                    <dd>Three reviewed sections</dd>
-                    <dt>Delivery</dt>
-                    <dd>No delivery requested</dd>
-                  </dl>
-                )}
-              </>
-            )}
-            {state === "stale" && (
-              <p role="alert">
-                A newer revision is available. Reload before making changes.
-              </p>
-            )}
-            {state === "success" && <p role="status">Changes saved.</p>}
-            {notice && <p role="status">{notice}</p>}
-          </div>
+          <p className="preview-label">
+            Fictional state fixture · {data.state} · Foundation{" "}
+            {getCatalog().foundationVersion}
+          </p>
+          <Recipe
+            key={data.recipe + data.state}
+            {...fixture}
+            recipe={data.recipe}
+            title={data.title}
+            description={data.description}
+            rows={rows}
+            selectedId={selected}
+            onSelect={setSelected}
+            onQuery={setQuery}
+            onSort={setReverse}
+            onNavigate={requested("navigation.open")}
+            onSignIn={requested("account.signIn")}
+            onSave={requested("settings.save")}
+            onCreate={requested("records.create")}
+            onAccept={requested("records.accept")}
+            onDiscard={requested("records.discard")}
+            onCancel={requested("task.cancel")}
+            onResume={requested("task.resume")}
+          />
+          {trace && <p role="status">{trace}</p>}
         </div>
       )}
     </>
@@ -446,12 +325,20 @@ const product: Product = {
       description:
         "Leave with usable code, clear notes, and a kit of your own.",
     },
+    {
+      id: "blueprint",
+      name: "Blueprint",
+      description:
+        "Compose an independent application from versioned Foundation recipes and explicit domain callbacks.",
+    },
   ],
   seed,
   Editor,
   Preview,
   exports: [
-    { id: "starter", name: "Runnable React starter" },
+    { id: "application", name: "Account-owned application · ZIP" },
+    { id: "blueprint", name: "Application blueprint · JSON" },
+    { id: "starter", name: "Interface fixture demo · ZIP" },
     { id: "css", name: "Semantic theme CSS" },
     { id: "svg", name: "Release graphic · SVG" },
     { id: "png", name: "Release graphic · PNG" },

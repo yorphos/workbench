@@ -61,6 +61,7 @@ export function createStudio(
   const store = new StudioStore(directory),
     renders = new RenderQueue(store),
     dist = resolve("dist");
+  config.onOpen?.(store);
   const json = (res, data, status = 200) => {
     res.writeHead(status, {
       "Content-Type": "application/json",
@@ -140,10 +141,15 @@ export function createStudio(
         });
         return res.end(method === "HEAD" ? undefined : readFileSync(file));
       }
+      if (path.startsWith('/api/agent/')) {
+        requireThat(config.agentRoute, 404, 'Agent route unavailable.');
+        return await config.agentRoute({req,res,path,method,url,store,renders,json,binary,normalize});
+      }
       const a = accountContext(req.headers, secret);
       requireThat(a, 401, "Sign in with Google to open your workspace.");
       store.account(a);
       if (!["GET", "HEAD"].includes(method)) {
+        requireThat(!req.headers['x-app-account'] || req.headers['x-app-account'] === a.id,409,'Account changed. Refresh before acting.');
         const origin = req.headers.origin;
         const expected = new URL(publicURL || `http://${req.headers.host}`)
           .origin;

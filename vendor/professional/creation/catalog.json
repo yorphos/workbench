@@ -1,0 +1,514 @@
+{
+  "schemaVersion": 1,
+  "foundationVersion": "0.13.1",
+  "profile": "professional-creation",
+  "license": "MIT; DM Sans OFL-1.1",
+  "sourceDigest": "sha256:e3b4b47239e07071febc16f7d6d9374d0bdb20f0d2f0a7d8d52d4c091828f5d5",
+  "sources": {
+    "creation/blueprint-schema.js": "49b235a08d11b8c9385e16d640329cc0d6fb559ff35fa43379b7833865788915",
+    "creation/blueprint-validator.js": "80492cf2f0582555aa8a230085225ea87edfa2c87e7b52747c19cf178cebbd3b",
+    "creation/blueprint.js": "463b691f25f7c26af2f4999648af1aa4b479651bf626b8c2d7d58b4d3a7655ce",
+    "creation/cli.js": "d5062c5db0f2844a9dd8c0d9ced6c434a7ccef7169e48a5e028c213e1d871cb3",
+    "creation/fixture.js": "44b43e9bc393f1bd302f0e110712898a7e30997bdb9b01dea38188e8596f3c25",
+    "creation/preview.js": "ec8d55da4d4418f1a83bd606fde8f909cdc5539dc997ffcc01b4a2cae32f2ae0",
+    "creation/profile.json": "2f54abf68f48b06f9b1a8794f2791e86ee5182adc1764d5355f5cba4f271907d",
+    "creation/runtime.js": "370327a280ada9bccf71c0c58d3b042f566a4329380308da0e73e96cd2562d3a",
+    "creation/scaffold.js": "c6223e103dabf99b23f481648de29757e82f8a49f8f7a1951ebad77d1c67b944",
+    "creation/template/.env.example": "ff0153445de8dec9cf0a1731adef11854b8cc52f02d06dbb2edbed573c942390",
+    "creation/template/.gitignore": "0149a6b2032b8bf7f2bf1711e32376701c2e7565cc8628397c2433410310c3bd",
+    "creation/template/index.html": "b7a150fce095aabf09f26d6502a88fe4e8d6b20a5cdedbeae4cd666760969745",
+    "creation/template/package-lock.json": "06ec0933498cc165484dfa227ab9c4cfbb990e6d43a438a6ba40a5acfdab8692",
+    "creation/template/playwright.config.ts": "159d9a124b5290222ce3a78fc2f28cf4d86bd41ca543b7a55251fd1c4c1abe8c",
+    "creation/template/scripts/fixture.ts": "2da2faf71836e4d454e27950bc4ac93585a35e61a93eaf9941466c6831bd37f5",
+    "creation/template/scripts/migrate.ts": "e9675fef58e958920b3a4cda9b06e41c198f957c2701415276166f4725d9f1ac",
+    "creation/template/server/index.ts": "5a41ef76f7ba8f996cd10e255452bb22ad66a3229c55985f5027e3e3cb9f5c99",
+    "creation/template/src/app.css": "c6eac7ae1fcfff9434b471539ce86262761818c88570ac00a537f8df3f173cac",
+    "creation/template/src/main.tsx": "b3ee7c42157161f720dda8304303cd6babdd3f7c3dfe7c162a93e95239172657",
+    "creation/template/src/vite-env.d.ts": "65996936fbb042915f7b74a200fcdde7e410f32a669b1ab9597cfaa4b0faddb5",
+    "creation/template/tests/contracts.test.ts": "f41224540c6c16338ff673d12dd3d1ed80b4bc8b90a84782d1337da95ef4b7bb",
+    "creation/template/tests/workflow.spec.ts": "025c97e3ec84a8c106a7d9aa3790959e7369109c1ae6ebc4e4ee6184bc673a3c",
+    "creation/template/tsconfig.json": "b5a15ebc15aa84c06ebb9c7e53803b34d87a366ea946ebaf20635ee76dd125e0",
+    "creation/template/vite.config.ts": "68b3c0fea03d1229997d32050b67cb5729c753ba5a632afc8a7b8a102179e4da",
+    "creation/theme.js": "0b6c6d51b55a79b62080e8a8314dc0c30d515b6a6f9934b3f064b73a4e6e549d",
+    "creation/ui.css": "b3c6760f41fd2e0e81fc121909d0c94c5bbb4029396fe74d6458e65e62b99136",
+    "creation/ui.d.ts": "3d2e6ec64aa479a7e4e9f9fd91fe7dc3cbdd6dd592be3a406a2e4cfa3f4f2d01",
+    "creation/ui.js": "65a510cd27bfa39d12a3e2a52f41541f24ee628ba02354f5ff4e570d14c4e5bb",
+    "LICENSE": "f40f956aff0c2b9d73b63c70cab930ad32ad4a22af238f113aa89d3418bb94ef",
+    "react/dialog.tsx": "28c5f00f693fe3d4bc5f99e811ab8a5d42822c47ae68e330297664b041057e26",
+    "server/agent-access.js": "b82f4c24c93c0a2cda2683f2e1df77781e26c852f8dfdb6cd2a812591ca42125",
+    "server/identity.js": "0396f5c1174bb05554b5cd5b54c4cd2d2d3b65f0efcaa36fc3d01556c7ed5abd",
+    "shared/model.js": "e99183997bc78f8586b319f05b33fb2c6df49ee975836ab371a02031fcfb9f63",
+    "web/brand.css": "2a00f35dee5e27d713362f4b8df0c96337637c83e7b15e7c9307846374c7e16c",
+    "web/digest.js": "7943136ca889438951311e87f6c002a4a100d10b0fda77287f208ed3d544c05c",
+    "web/fonts.css": "8f67d940f348ff5508da545e4b3bf1d8fec9e245cf0108f4d729f91fad9043ce",
+    "web/fonts/dmsans-OFL.txt": "7ec15e79c59bc14b86436a17e5eb7926b46cbcaeb08e1a7e6c110b415e6eb2a2",
+    "web/fonts/font-0.ttf": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+    "web/fonts/font-1.ttf": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+    "web/fonts/font-2.ttf": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+    "web/fonts/font-3.ttf": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+    "web/foundation.css": "b140c88ccee5c277c38b08fb9fdea4fc5683d1b8099000ae5279c03282cf8fd3",
+    "web/tokens.css": "b30b7b64f23468d59c820d48f31e9caaaf265c9c3518b0fa51c6e0118db8a839"
+  },
+  "designReference": {
+    "app": "Stacks",
+    "commit": "580eca451efd8e1528d5617ed67f27ab234f8f37",
+    "preserveProduct": true
+  },
+  "runtimeProfiles": [
+    {
+      "id": "react-node24-sqlite-google",
+      "frontend": "react",
+      "backend": "node24",
+      "persistence": "sqlite",
+      "auth": "google",
+      "domainAdapter": "review-records-v1"
+    }
+  ],
+  "dependencies": {
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "@base-ui/react": "1.7.0",
+    "ajv": "8.20.0",
+    "canonicalize": "5.1.0"
+  },
+  "recipes": [
+    {
+      "id": "sign-in",
+      "title": "Sign-in",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [
+        "onSignIn"
+      ],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-sign-in",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "settings",
+      "title": "Settings",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [
+        "onSave"
+      ],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-settings",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "data-table",
+      "title": "Data table",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [
+        "onSelect"
+      ],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-data-table",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "list-detail",
+      "title": "List & detail",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [
+        "onSelect"
+      ],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-list-detail",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "navigation",
+      "title": "Navigation",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [
+        "onNavigate"
+      ],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-navigation",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "multi-step",
+      "title": "Multi-step form",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [
+        "onCreate"
+      ],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-multi-step",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "task-progress",
+      "title": "Task progress",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-task-progress",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "change-review",
+      "title": "Change review",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [
+        "onAccept",
+        "onDiscard"
+      ],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-change-review",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    },
+    {
+      "id": "outcome-receipt",
+      "title": "Outcome receipt",
+      "version": 1,
+      "status": "released",
+      "adoptionEvidence": "Consumer verification is recorded separately from source release.",
+      "adapters": [
+        "react"
+      ],
+      "states": [
+        "ready",
+        "loading",
+        "empty",
+        "error",
+        "success",
+        "disabled",
+        "long",
+        "stale",
+        "queued",
+        "running",
+        "interrupted",
+        "awaiting_review",
+        "uncertain"
+      ],
+      "requiredCallbacks": [],
+      "propsContract": "creation/ui.d.ts#RecipeProps",
+      "implementation": [
+        "creation/ui.js",
+        "creation/ui.css"
+      ],
+      "fixtures": "creation/fixture.js",
+      "accessibility": [
+        "labelled controls",
+        "keyboard activation",
+        "focus-visible",
+        "responsive containment",
+        "reduced motion"
+      ],
+      "replacement": null,
+      "examples": [
+        {
+          "id": "fictional-outcome-receipt",
+          "trust": "fixture",
+          "domainEffects": false
+        }
+      ]
+    }
+  ]
+}

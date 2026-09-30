@@ -1,0 +1,893 @@
+{
+  "schemaVersion": 1,
+  "app": "workbench",
+  "capabilities": [
+    {
+      "id": "workbench:projects.inspect",
+      "app": "workbench",
+      "version": 1,
+      "kind": "read",
+      "title": "projects.inspect",
+      "description": "Delegated account-owned Workbench projects.inspect. Uses the same domain handler as the workspace. No deployment, provider calls or messaging.",
+      "transport": {
+        "method": "GET",
+        "path": "/api/agent/projects/inspect",
+        "pathParams": []
+      },
+      "auth": {
+        "mode": "service",
+        "scope": "agent:workbench:creation",
+        "allowedCallers": [
+          "conductor",
+          "foreman",
+          "agent-gateway"
+        ]
+      },
+      "execution": {
+        "mode": "sync",
+        "timeoutMs": 60000
+      },
+      "effects": {
+        "reads": [
+          "account:projects"
+        ],
+        "mutates": [],
+        "external": [],
+        "cost": {
+          "kind": "none"
+        }
+      },
+      "approval": {
+        "required": false,
+        "policy": "none"
+      },
+      "retry": "safe",
+      "idempotency": {
+        "key": "none",
+        "field": null
+      },
+      "agent": {
+        "schemaVersion": 1,
+        "enabled": true,
+        "delegation": true,
+        "name": "workbench_projects_inspect",
+        "contractVersion": 1,
+        "resourceFields": [
+          "workspace"
+        ],
+        "constraintFields": [],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workspace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "project": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "workspace",
+            "project"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "resultJson": {
+              "type": "string",
+              "maxLength": 250000
+            }
+          },
+          "required": [
+            "status",
+            "resultJson"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": {},
+          "query": {
+            "workspace": "workspace",
+            "project": "project"
+          },
+          "body": []
+        },
+        "executor": "workbench",
+        "chargeOwner": "none",
+        "operations": {
+          "lookup": null,
+          "status": "workbench:operations.status",
+          "cancel": null
+        }
+      }
+    },
+    {
+      "id": "workbench:projects.create",
+      "app": "workbench",
+      "version": 1,
+      "kind": "action",
+      "title": "projects.create",
+      "description": "Delegated account-owned Workbench projects.create. Uses the same domain handler as the workspace. No deployment, provider calls or messaging.",
+      "transport": {
+        "method": "POST",
+        "path": "/api/agent/projects/create",
+        "pathParams": []
+      },
+      "auth": {
+        "mode": "service",
+        "scope": "agent:workbench:creation",
+        "allowedCallers": [
+          "conductor",
+          "foreman",
+          "agent-gateway"
+        ]
+      },
+      "execution": {
+        "mode": "sync",
+        "timeoutMs": 60000
+      },
+      "effects": {
+        "reads": [
+          "account:projects"
+        ],
+        "mutates": [
+          "account:projects",
+          "account:operation-receipts"
+        ],
+        "external": [],
+        "cost": {
+          "kind": "none"
+        }
+      },
+      "approval": {
+        "required": false,
+        "policy": "none"
+      },
+      "retry": "manual_review",
+      "idempotency": {
+        "key": "required",
+        "field": "operationId"
+      },
+      "agent": {
+        "schemaVersion": 1,
+        "enabled": true,
+        "delegation": true,
+        "name": "workbench_projects_create",
+        "contractVersion": 1,
+        "resourceFields": [
+          "workspace"
+        ],
+        "constraintFields": [],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workspace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "blueprintJson": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50000
+            }
+          },
+          "required": [
+            "workspace",
+            "operationId",
+            "blueprintJson"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "resultJson": {
+              "type": "string",
+              "maxLength": 250000
+            }
+          },
+          "required": [
+            "status",
+            "resultJson"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": {},
+          "query": {},
+          "body": [
+            "workspace",
+            "operationId",
+            "blueprintJson"
+          ]
+        },
+        "executor": "workbench",
+        "chargeOwner": "none",
+        "operations": {
+          "lookup": "workbench:operations.status",
+          "status": "workbench:operations.status",
+          "cancel": null
+        }
+      }
+    },
+    {
+      "id": "workbench:projects.update",
+      "app": "workbench",
+      "version": 1,
+      "kind": "action",
+      "title": "projects.update",
+      "description": "Delegated account-owned Workbench projects.update. Uses the same domain handler as the workspace. No deployment, provider calls or messaging.",
+      "transport": {
+        "method": "POST",
+        "path": "/api/agent/projects/update",
+        "pathParams": []
+      },
+      "auth": {
+        "mode": "service",
+        "scope": "agent:workbench:creation",
+        "allowedCallers": [
+          "conductor",
+          "foreman",
+          "agent-gateway"
+        ]
+      },
+      "execution": {
+        "mode": "sync",
+        "timeoutMs": 60000
+      },
+      "effects": {
+        "reads": [
+          "account:projects"
+        ],
+        "mutates": [
+          "account:projects",
+          "account:operation-receipts"
+        ],
+        "external": [],
+        "cost": {
+          "kind": "none"
+        }
+      },
+      "approval": {
+        "required": false,
+        "policy": "none"
+      },
+      "retry": "manual_review",
+      "idempotency": {
+        "key": "required",
+        "field": "operationId"
+      },
+      "agent": {
+        "schemaVersion": 1,
+        "enabled": true,
+        "delegation": true,
+        "name": "workbench_projects_update",
+        "contractVersion": 1,
+        "resourceFields": [
+          "workspace"
+        ],
+        "constraintFields": [],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workspace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "project": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "blueprintJson": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 50000
+            }
+          },
+          "required": [
+            "workspace",
+            "operationId",
+            "project",
+            "revision",
+            "blueprintJson"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "resultJson": {
+              "type": "string",
+              "maxLength": 250000
+            }
+          },
+          "required": [
+            "status",
+            "resultJson"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": {},
+          "query": {},
+          "body": [
+            "workspace",
+            "operationId",
+            "project",
+            "revision",
+            "blueprintJson"
+          ]
+        },
+        "executor": "workbench",
+        "chargeOwner": "none",
+        "operations": {
+          "lookup": "workbench:operations.status",
+          "status": "workbench:operations.status",
+          "cancel": null
+        }
+      }
+    },
+    {
+      "id": "workbench:artifacts.export",
+      "app": "workbench",
+      "version": 1,
+      "kind": "action",
+      "title": "artifacts.export",
+      "description": "Delegated account-owned Workbench artifacts.export. Uses the same domain handler as the workspace. No deployment, provider calls or messaging.",
+      "transport": {
+        "method": "POST",
+        "path": "/api/agent/artifacts/export",
+        "pathParams": []
+      },
+      "auth": {
+        "mode": "service",
+        "scope": "agent:workbench:creation",
+        "allowedCallers": [
+          "conductor",
+          "foreman",
+          "agent-gateway"
+        ]
+      },
+      "execution": {
+        "mode": "sync",
+        "timeoutMs": 60000
+      },
+      "effects": {
+        "reads": [
+          "account:projects"
+        ],
+        "mutates": [
+          "account:projects",
+          "account:operation-receipts"
+        ],
+        "external": [],
+        "cost": {
+          "kind": "none"
+        }
+      },
+      "approval": {
+        "required": false,
+        "policy": "none"
+      },
+      "retry": "manual_review",
+      "idempotency": {
+        "key": "required",
+        "field": "operationId"
+      },
+      "agent": {
+        "schemaVersion": 1,
+        "enabled": true,
+        "delegation": true,
+        "name": "workbench_artifacts_export",
+        "contractVersion": 1,
+        "resourceFields": [
+          "workspace"
+        ],
+        "constraintFields": [
+          "format"
+        ],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workspace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "project": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "revision": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 2147483647
+            },
+            "format": {
+              "type": "string",
+              "enum": [
+                "blueprint",
+                "application",
+                "png",
+                "pdf"
+              ],
+              "maxLength": 20
+            }
+          },
+          "required": [
+            "workspace",
+            "operationId",
+            "project",
+            "revision",
+            "format"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "resultJson": {
+              "type": "string",
+              "maxLength": 250000
+            }
+          },
+          "required": [
+            "status",
+            "resultJson"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": {},
+          "query": {},
+          "body": [
+            "workspace",
+            "operationId",
+            "project",
+            "revision",
+            "format"
+          ]
+        },
+        "executor": "workbench",
+        "chargeOwner": "none",
+        "operations": {
+          "lookup": "workbench:operations.status",
+          "status": "workbench:operations.status",
+          "cancel": "workbench:jobs.cancel"
+        }
+      }
+    },
+    {
+      "id": "workbench:operations.status",
+      "app": "workbench",
+      "version": 1,
+      "kind": "read",
+      "title": "operations.status",
+      "description": "Delegated account-owned Workbench operations.status. Uses the same domain handler as the workspace. No deployment, provider calls or messaging.",
+      "transport": {
+        "method": "GET",
+        "path": "/api/agent/operations/status",
+        "pathParams": []
+      },
+      "auth": {
+        "mode": "service",
+        "scope": "agent:workbench:creation",
+        "allowedCallers": [
+          "conductor",
+          "foreman",
+          "agent-gateway"
+        ]
+      },
+      "execution": {
+        "mode": "sync",
+        "timeoutMs": 60000
+      },
+      "effects": {
+        "reads": [
+          "account:projects"
+        ],
+        "mutates": [],
+        "external": [],
+        "cost": {
+          "kind": "none"
+        }
+      },
+      "approval": {
+        "required": false,
+        "policy": "none"
+      },
+      "retry": "safe",
+      "idempotency": {
+        "key": "none",
+        "field": null
+      },
+      "agent": {
+        "schemaVersion": 1,
+        "enabled": true,
+        "delegation": true,
+        "name": "workbench_operations_status",
+        "contractVersion": 1,
+        "resourceFields": [
+          "workspace"
+        ],
+        "constraintFields": [],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workspace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            }
+          },
+          "required": [
+            "workspace",
+            "operationId"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "resultJson": {
+              "type": "string",
+              "maxLength": 250000
+            }
+          },
+          "required": [
+            "status",
+            "resultJson"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": {},
+          "query": {
+            "workspace": "workspace",
+            "operationId": "operationId"
+          },
+          "body": []
+        },
+        "executor": "workbench",
+        "chargeOwner": "none",
+        "operations": {
+          "lookup": null,
+          "status": "workbench:operations.status",
+          "cancel": null
+        }
+      }
+    },
+    {
+      "id": "workbench:jobs.cancel",
+      "app": "workbench",
+      "version": 1,
+      "kind": "action",
+      "title": "jobs.cancel",
+      "description": "Delegated account-owned Workbench jobs.cancel. Uses the same domain handler as the workspace. No deployment, provider calls or messaging.",
+      "transport": {
+        "method": "POST",
+        "path": "/api/agent/jobs/cancel",
+        "pathParams": []
+      },
+      "auth": {
+        "mode": "service",
+        "scope": "agent:workbench:creation",
+        "allowedCallers": [
+          "conductor",
+          "foreman",
+          "agent-gateway"
+        ]
+      },
+      "execution": {
+        "mode": "sync",
+        "timeoutMs": 60000
+      },
+      "effects": {
+        "reads": [
+          "account:projects"
+        ],
+        "mutates": [
+          "account:projects",
+          "account:operation-receipts"
+        ],
+        "external": [],
+        "cost": {
+          "kind": "none"
+        }
+      },
+      "approval": {
+        "required": false,
+        "policy": "none"
+      },
+      "retry": "manual_review",
+      "idempotency": {
+        "key": "required",
+        "field": "operationId"
+      },
+      "agent": {
+        "schemaVersion": 1,
+        "enabled": true,
+        "delegation": true,
+        "name": "workbench_jobs_cancel",
+        "contractVersion": 1,
+        "resourceFields": [
+          "workspace"
+        ],
+        "constraintFields": [],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workspace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "job": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            }
+          },
+          "required": [
+            "workspace",
+            "operationId",
+            "job"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "resultJson": {
+              "type": "string",
+              "maxLength": 250000
+            }
+          },
+          "required": [
+            "status",
+            "resultJson"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": {},
+          "query": {},
+          "body": [
+            "workspace",
+            "operationId",
+            "job"
+          ]
+        },
+        "executor": "workbench",
+        "chargeOwner": "none",
+        "operations": {
+          "lookup": "workbench:operations.status",
+          "status": "workbench:operations.status",
+          "cancel": null
+        }
+      }
+    },
+    {
+      "id": "workbench:artifacts.read",
+      "app": "workbench",
+      "version": 1,
+      "kind": "read",
+      "title": "artifacts.read",
+      "description": "Delegated account-owned Workbench artifacts.read. Uses the same domain handler as the workspace. No deployment, provider calls or messaging.",
+      "transport": {
+        "method": "GET",
+        "path": "/api/agent/artifacts/read",
+        "pathParams": []
+      },
+      "auth": {
+        "mode": "service",
+        "scope": "agent:workbench:creation",
+        "allowedCallers": [
+          "conductor",
+          "foreman",
+          "agent-gateway"
+        ]
+      },
+      "execution": {
+        "mode": "sync",
+        "timeoutMs": 60000
+      },
+      "effects": {
+        "reads": [
+          "account:projects"
+        ],
+        "mutates": [],
+        "external": [],
+        "cost": {
+          "kind": "none"
+        }
+      },
+      "approval": {
+        "required": false,
+        "policy": "none"
+      },
+      "retry": "safe",
+      "idempotency": {
+        "key": "none",
+        "field": null
+      },
+      "agent": {
+        "schemaVersion": 1,
+        "enabled": true,
+        "delegation": true,
+        "name": "workbench_artifacts_read",
+        "contractVersion": 1,
+        "resourceFields": [
+          "workspace"
+        ],
+        "constraintFields": [],
+        "inputSchema": {
+          "type": "object",
+          "properties": {
+            "workspace": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "file": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 100
+            },
+            "offset": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 1048576
+            }
+          },
+          "required": [
+            "workspace",
+            "file",
+            "offset"
+          ],
+          "additionalProperties": false
+        },
+        "outputSchema": {
+          "type": "object",
+          "properties": {
+            "operationId": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128
+            },
+            "status": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 40
+            },
+            "resultJson": {
+              "type": "string",
+              "maxLength": 250000
+            }
+          },
+          "required": [
+            "status",
+            "resultJson"
+          ],
+          "additionalProperties": false
+        },
+        "bindings": {
+          "path": {},
+          "query": {
+            "workspace": "workspace",
+            "file": "file",
+            "offset": "offset"
+          },
+          "body": []
+        },
+        "executor": "workbench",
+        "chargeOwner": "none",
+        "operations": {
+          "lookup": null,
+          "status": "workbench:operations.status",
+          "cancel": null
+        }
+      }
+    }
+  ]
+}

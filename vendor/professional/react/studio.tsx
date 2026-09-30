@@ -82,20 +82,9 @@ function Brand({ product }: { product: Product }) {
     </a>
   );
 }
-export function Field({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}) {
-  return (
-    <label className="field">
-      <span>{label}</span>
-      {children}
-    </label>
-  );
-}
+export {Field} from '../creation/ui.js';
+import {Field} from '../creation/ui.js';
+import '../creation/ui.css';
 function Header({ product, email }: { product: Product; email?: string }) {
   const [appearance,setAppearance]=useState(() => {try{return localStorage.getItem('yrp:'+product.id+':appearance') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch{return 'light';}});
   useEffect(()=>{document.documentElement.dataset.pfTheme=appearance;try{localStorage.setItem('yrp:'+product.id+':appearance',appearance);}catch{}},[appearance]);
@@ -103,7 +92,7 @@ function Header({ product, email }: { product: Product; email?: string }) {
     <header className="studio-header">
       <Brand product={product} />
       <nav aria-label="Product"><button className="appearance-toggle" aria-label={"Switch to " + (appearance === "dark" ? "light" : "dark") + " appearance"} onClick={()=>setAppearance(appearance === "dark" ? "light" : "dark")}>{appearance === "dark" ? <Sun size={16}/> : <Moon size={16}/>}</button>
-        <a href={path("recipes")}>Explore</a>
+        <a href="/">Toolbox</a><a href={path("recipes")}>Explore</a>
         <a href={path("docs")}>Documentation</a>
         {email ? (
           <a
@@ -329,7 +318,7 @@ export function Studio({ product }: { product: Product }) {
   async function api(url: string, method = "GET", value?: any) {
     const response = await fetch(path(url), {
       method,
-      headers: { "Content-Type": "application/json", "X-Studio-Request": "1" },
+      headers: { "Content-Type": "application/json", "X-Studio-Request": "1", ...(sessionId.current ? {"X-App-Account":sessionId.current}: {}) },
       body: value === undefined ? undefined : JSON.stringify(value),
       signal: requestAbort.current.signal,
     });
@@ -375,16 +364,20 @@ export function Studio({ product }: { product: Product }) {
     setSession(s);
     return s;
   }
+  function remember(workspaceId:string,projectId?:string){const u=new URL(location.href);u.searchParams.set("workspace",workspaceId);if(projectId)u.searchParams.set("project",projectId);else u.searchParams.delete("project");history.replaceState({},"",u);}
   async function selectWorkspace(id: string) {
     setWorkspace(id);
     setProject(null);
     setDraft(null);
     setProjects(await api("api/workspaces/" + id));
+    remember(id);
   }
   async function openProject(id: string) {
     const p = await api("api/projects/" + id);
     setProject(p);
-    setDraft(structuredClone(p.data));
+    setWorkspace(p.workspace);
+    remember(p.workspace,p.id);
+    setDraft({...product.seed(p.data.name),...structuredClone(p.data)});
     setJob(null);
   }
   async function refreshProject() {
@@ -403,7 +396,7 @@ export function Studio({ product }: { product: Product }) {
           `Invitation for ${invitation.email}. Accept it to join the ${invitation.role} workspace.`,
         );
         setDialog("acceptInvite");
-      } else if (s.workspaces[0]) await selectWorkspace(s.workspaces[0].id);
+      } else {const params=new URLSearchParams(location.search), requested=params.get("project"), workspaceId=params.get("workspace");const w=s.workspaces.find((v:any)=>v.id===workspaceId)||s.workspaces[0];if(w)await selectWorkspace(w.id);if(requested)await openProject(requested); }
     });
     const timer = setInterval(() => {
       refresh().catch(() => {});
@@ -646,7 +639,7 @@ export function Studio({ product }: { product: Product }) {
                               { revision: project.revision, data: draft },
                             );
                             setProject({ ...project, ...p });
-                            setDraft(structuredClone(p.data));
+                            setDraft({...product.seed(p.data.name),...structuredClone(p.data)});
                             setNotice("Changes saved.");
                             setProjects(
                               await api("api/workspaces/" + workspace),
