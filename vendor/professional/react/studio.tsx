@@ -97,10 +97,12 @@ export function Field({
   );
 }
 function Header({ product, email }: { product: Product; email?: string }) {
+  const [appearance,setAppearance]=useState(() => {try{return localStorage.getItem('yrp:'+product.id+':appearance') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch{return 'light';}});
+  useEffect(()=>{document.documentElement.dataset.pfTheme=appearance;try{localStorage.setItem('yrp:'+product.id+':appearance',appearance);}catch{}},[appearance]);
   return (
     <header className="studio-header">
       <Brand product={product} />
-      <nav aria-label="Product">
+      <nav aria-label="Product"><button className="appearance-toggle" aria-label={"Switch to " + (appearance === "dark" ? "light" : "dark") + " appearance"} onClick={()=>setAppearance(appearance === "dark" ? "light" : "dark")}>{appearance === "dark" ? <Sun size={16}/> : <Moon size={16}/>}</button>
         <a href={path("recipes")}>Explore</a>
         <a href={path("docs")}>Documentation</a>
         {email ? (
@@ -898,6 +900,7 @@ export function Studio({ product }: { product: Product }) {
                   )}
                 </div>
               )}
+              {readonly && !!project.files?.length && <section className="project-footer" aria-label="Shared attachments">{project.files.map(f => <a key={f.id} href={path("api/files/"+f.id)}>{f.name}</a>)}</section>}
               {!readonly && (
                 <div className="project-footer">
                   <button

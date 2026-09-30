@@ -1147,3 +1147,5 @@ fieldset {
 .slide-preview.split small {grid-column:1/-1;}
 .slide-preview.closing {background:var(--kit-accent);color:var(--kit-accent-text);}
 .slide-preview.closing small{color:inherit;}
+
+.appearance-toggle{padding:var(--pf-space-2);min-width:var(--pf-control-height);}

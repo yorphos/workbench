@@ -26,6 +26,13 @@ test("public repertoire is responsive, branded, and keyboard usable", async ({
     path: "test-results/public-" + test.info().project.name + ".png",
     fullPage: true,
   });
+  await page
+    .getByRole("button", { name: "Switch to dark appearance", exact: true })
+    .click();
+  await expect(page.locator("html")).toHaveAttribute("data-pf-theme", "dark");
+  await page
+    .getByRole("button", { name: "Switch to light appearance", exact: true })
+    .click();
   expect(errors).toEqual([]);
 });
 test("account workflow saves, publishes, comments, exports and invites safely", async ({
@@ -153,13 +160,11 @@ test("an account reviews exact email and attachments before one recorded send", 
     .getByRole("button", { name: "Save encrypted connection", exact: true })
     .click();
   await page.keyboard.press("Escape");
-  await page
-    .locator('.project-footer input[type="file"]')
-    .setInputFiles({
-      name: "evidence.txt",
-      mimeType: "text/plain",
-      buffer: Buffer.from("Checked source evidence"),
-    });
+  await page.locator('.project-footer input[type="file"]').setInputFiles({
+    name: "evidence.txt",
+    mimeType: "text/plain",
+    buffer: Buffer.from("Checked source evidence"),
+  });
   await expect(
     page.getByRole("link", { name: "evidence.txt", exact: true }),
   ).toBeVisible();
