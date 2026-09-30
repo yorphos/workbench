@@ -1,0 +1,27 @@
+{
+  "package": "@yrp/app-foundation",
+  "version": "0.12.0",
+  "files": {
+    "LICENSE": "f40f956aff0c2b9d73b63c70cab930ad32ad4a22af238f113aa89d3418bb94ef",
+    "react/dialog.tsx": "28c5f00f693fe3d4bc5f99e811ab8a5d42822c47ae68e330297664b041057e26",
+    "react/studio.css": "d79007b653997e6ab9ec16bf25306d3cb57a5c5791b9116e0e11d4139a269759",
+    "react/studio.tsx": "d2a8cb95fb0ea3ffeb7afa1340add046a67b0aa055f98780a4810cf723bec80c",
+    "react/theme.tsx": "0aa3be40bd3d714ef35f255e23d5eae5222b00697d54980b5059e94b0d696c6f",
+    "server/app.js": "2bed9fa78a5c1a685b9fabb8340c79514674047e93eb189733506aa01e256614",
+    "server/identity.js": "0396f5c1174bb05554b5cd5b54c4cd2d2d3b65f0efcaa36fc3d01556c7ed5abd",
+    "server/kits.js": "aeaf0bdaafd84d13d1fcd68659717b52670c88606f34494ca25524fe8e21ee0d",
+    "server/mail.js": "df26e446696b70e2cf19fc660c29d5ebbe5646c849c9ef7216b9fb1cd9ecc85e",
+    "server/render.js": "45c7ed22837b5512e14ff4c3a6eb9469ba01054a23c774046618f6762a4c1ba4",
+    "server/workspaces.js": "a5ffe5d3ab8754444deb69b2781d191b5839c9ba6de27280d2d33312f6876ae3",
+    "shared/model.js": "e99183997bc78f8586b319f05b33fb2c6df49ee975836ab371a02031fcfb9f63",
+    "web/brand.css": "2a00f35dee5e27d713362f4b8df0c96337637c83e7b15e7c9307846374c7e16c",
+    "web/fonts.css": "8f67d940f348ff5508da545e4b3bf1d8fec9e245cf0108f4d729f91fad9043ce",
+    "web/fonts/dmsans-OFL.txt": "7ec15e79c59bc14b86436a17e5eb7926b46cbcaeb08e1a7e6c110b415e6eb2a2",
+    "web/fonts/font-0.ttf": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+    "web/fonts/font-1.ttf": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+    "web/fonts/font-2.ttf": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+    "web/fonts/font-3.ttf": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+    "web/foundation.css": "b140c88ccee5c277c38b08fb9fdea4fc5683d1b8099000ae5279c03282cf8fd3",
+    "web/tokens.css": "b30b7b64f23468d59c820d48f31e9caaaf265c9c3518b0fa51c6e0118db8a839"
+  }
+}

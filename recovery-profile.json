@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "profileVersion": 1,
+  "id": "workbench",
+  "app": "workbench",
+  "stateful": true,
+  "components": [
+    {
+      "id": "studio-data",
+      "kind": "store",
+      "required": true,
+      "restoreOwner": "workbench",
+      "bindings": [
+        {
+          "type": "directory",
+          "root": "data",
+          "path": "."
+        }
+      ]
+    }
+  ]
+}
