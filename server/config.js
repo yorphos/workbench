@@ -8,7 +8,7 @@ import {
   recipeCSS,
   patternHTML,
 } from "../shared/recipes.js";
-import { readFileSync } from "node:fs";
+import {embedSVGFonts,starterFonts,starterFontStyles} from "../vendor/professional/server/fonts.js";
 import { zipSync } from "fflate";
 import {
   defaultTheme,
@@ -31,27 +31,7 @@ export const config = {
         kit.data.notes ||
         "Imported project identity. Source: " + kit.manifest.app,
     }),
-  extras: (data) => {
-    const files = starterFiles(data);
-    files["src/fonts/dm-sans.ttf"] = new Uint8Array(
-      readFileSync(
-        new URL("../vendor/professional/web/fonts/font-0.ttf", import.meta.url),
-      ),
-    );
-    files["src/fonts/OFL.txt"] = new Uint8Array(
-      readFileSync(
-        new URL(
-          "../vendor/professional/web/fonts/dmsans-OFL.txt",
-          import.meta.url,
-        ),
-      ),
-    );
-    files["src/recipe.css"] = new TextEncoder().encode(
-      new TextDecoder().decode(files["src/recipe.css"]) +
-        '\n@font-face{font-family:"DM Sans";src:url(./fonts/dm-sans.ttf) format("truetype");font-weight:100 900;font-style:normal}',
-    );
-    return files;
-  },
+  extras: data => {const files={...starterFiles(data),...starterFonts()};files['src/recipe.css']=new TextEncoder().encode(new TextDecoder().decode(files['src/recipe.css'])+'\n'+starterFontStyles);return files;},
   registry: (id) => {
     const source = componentSource(id);
     return source
@@ -89,7 +69,7 @@ export const config = {
     if (format === "css")
       return { body: themeCSS(d.theme), mime: "text/css", name: "theme.css" };
     if (format === "svg")
-      return { body: graphic(d), mime: "image/svg+xml", name: "release.svg" };
+      return { body: embedSVGFonts(graphic(d)), mime: "image/svg+xml", name: "release.svg" };
     if (format === "png")
       return {
         body:

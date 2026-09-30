@@ -1,13 +1,14 @@
 {
   "package": "@yrp/app-foundation",
-  "version": "0.12.0",
+  "version": "0.12.1",
   "files": {
     "LICENSE": "f40f956aff0c2b9d73b63c70cab930ad32ad4a22af238f113aa89d3418bb94ef",
     "react/dialog.tsx": "28c5f00f693fe3d4bc5f99e811ab8a5d42822c47ae68e330297664b041057e26",
     "react/studio.css": "722a75b1bdf864c488548fa0f8eeb6dbb6fd2bf365e71cba7e7d6edd2e349da7",
     "react/studio.tsx": "857d0c293344b7b81662dbc514237bb9ba7d5e61fbfe0d27f55398ad24fbc19b",
     "react/theme.tsx": "0aa3be40bd3d714ef35f255e23d5eae5222b00697d54980b5059e94b0d696c6f",
-    "server/app.js": "2bed9fa78a5c1a685b9fabb8340c79514674047e93eb189733506aa01e256614",
+    "server/app.js": "6f6262f6208042eab29a20568658d985eeed1386edb4c5e0c6ae76193257e783",
+    "server/fonts.js": "fb6dac85970e6a957b02566191e8d947f9b4a025591a443a20181bd7efd826a6",
     "server/identity.js": "0396f5c1174bb05554b5cd5b54c4cd2d2d3b65f0efcaa36fc3d01556c7ed5abd",
     "server/kits.js": "aeaf0bdaafd84d13d1fcd68659717b52670c88606f34494ca25524fe8e21ee0d",
     "server/mail.js": "df26e446696b70e2cf19fc660c29d5ebbe5646c849c9ef7216b9fb1cd9ecc85e",

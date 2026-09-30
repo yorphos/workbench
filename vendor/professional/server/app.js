@@ -11,6 +11,7 @@ import {
 } from "./workspaces.js";
 import { packKit, readKit } from "./kits.js";
 import { mailConnection, sendPreview, dispatch } from "./mail.js";
+import {embedHTMLFonts} from "./fonts.js";
 import { RenderQueue } from "./render.js";
 import { text, documentHTML, escapeHTML } from "../shared/model.js";
 const MIME = {
@@ -407,13 +408,7 @@ export function createStudio(
           output.body.includes?.("</head>") &&
           !b.format.startsWith("email-")
         ) {
-          const font = readFileSync(
-            new URL("../web/fonts/font-0.ttf", import.meta.url),
-          ).toString("base64");
-          output.body = output.body.replace(
-            "</head>",
-            `<style>@font-face{font-family:"DM Sans";src:url(data:font/ttf;base64,${font}) format("truetype");font-weight:100 900;font-style:normal}</style></head>`,
-          );
+          output.body = embedHTMLFonts(output.body);
         }
         requireThat(output, 400, "Unsupported output format.");
         if (["pdf", "png"].includes(b.format))
