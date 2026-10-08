@@ -1,0 +1,28 @@
+{
+  "source_commit": "b8a84907d27d46962609d079d0fa3e799540dfe6",
+  "library_version": 4,
+  "release_sha256": "500b7d90dc08e7a400914c14449bde273d46afef364b6c1a55b14f60181d63e5",
+  "app": "workbench",
+  "files": {
+    "img/dark/workbench.svg": {
+      "bytes": 581,
+      "sha256": "a684cb89bc60b5bfe4e565d690c799d91164e21a4077a6e3358ac9824a0713ad"
+    },
+    "img/light/workbench.svg": {
+      "bytes": 581,
+      "sha256": "93485bf32562108455bdfc0afc881a6c98d7f21e690701df4091a8d31c5ee668"
+    },
+    "svg/duotone/workbench.svg": {
+      "bytes": 586,
+      "sha256": "4e8a08836aabdd6eeff4e4283f8d2a2f5f48724cd6c09e6efb1b32b17ea6c6d0"
+    },
+    "svg/filled/workbench.svg": {
+      "bytes": 500,
+      "sha256": "b6dbd82cfd746e6556cd58fdd3f6d6661fa139efce688d399bfdb6cc0c091112"
+    },
+    "svg/outline/workbench.svg": {
+      "bytes": 593,
+      "sha256": "fe5fe10fc514dbc13592393a8606bb2266a805faa723e9bfdb26abc7eaa69fc5"
+    }
+  }
+}
