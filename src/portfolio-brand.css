@@ -1,0 +1,4 @@
+.product-mark>svg{display:none}
+.product-mark::before{content:"";display:block;width:32px;height:32px;background:center/contain no-repeat url('../assets/portfolio-icons/img/dark/workbench.svg')}
+:root[data-pf-theme="dark"] .product-mark::before{background-image:url('../assets/portfolio-icons/img/light/workbench.svg')}
+@media(prefers-color-scheme:dark){:root:not([data-pf-theme="light"]):not([data-pf-theme="dark"]) .product-mark::before,:root[data-pf-theme="system"] .product-mark::before{background-image:url('../assets/portfolio-icons/img/light/workbench.svg')}}
