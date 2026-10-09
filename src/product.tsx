@@ -12,7 +12,8 @@ import { Sun, Moon, Smartphone, Monitor, Code, Check } from "lucide-react";
 import { Studio, Field } from "../vendor/professional/react/studio";
 import type { Product, EditorProps } from "../vendor/professional/react/studio";
 import { ThemeFields } from "../vendor/professional/react/theme";
-import { contrast } from "../vendor/professional/shared/model.js";
+import {useAppearance} from "../vendor/professional/react/appearance";
+import { defaultTheme, contrast } from "../vendor/professional/shared/model.js";
 import {FormEditor,FormPreview} from './form-editor';
 import './forms.css';
 import {
@@ -36,6 +37,7 @@ function Editor({ data, onChange, module, readonly, draftKey }: EditorProps) {
         <BlueprintEditor data={data} onChange={onChange} />
       ) : module === "theme" ? (
         <>
+<button type="button" onClick={()=>set("theme",structuredClone(defaultTheme))}>Use Pip v2 defaults</button>
           <ThemeFields value={data.theme} onChange={(t) => set("theme", t)} />
           <p className="contrast-note">
             Text contrast:{" "}
@@ -207,7 +209,9 @@ function BlueprintEditor({
   );
 }
 export function Preview({ data, module }: { data: any; module: string }) {
-  const [dark, setDark] = useState(false),
+  const {dark,setAppearance}=useAppearance();
+  const setDark=(value:boolean)=>setAppearance(value?"dark":"light");
+  const
     [mobile, setMobile] = useState(false),
     [code, setCode] = useState(false),
     [trace, setTrace] = useState(""),
@@ -234,7 +238,7 @@ export function Preview({ data, module }: { data: any; module: string }) {
         name +
         ". No application effect was applied.",
     );
-  if(module==='forms')return <FormPreview blueprint={data.formBlueprint??null}/>;
+  if(module==='forms')return <FormPreview blueprint={data.formBlueprint??null} appearance={dark?'dark':'light'} onAppearanceChange={setAppearance}/>;
   return (
     <>
       <div className="preview-controls">
@@ -262,13 +266,11 @@ export function Preview({ data, module }: { data: any; module: string }) {
       {code ? (
         <pre style={{ padding: 20 }}>{componentSource(previewRecipe)}</pre>
       ) : module === "publish" && data.graphic !== "screenshot" ? (
-        <img
+        <div
           className="graphic-preview"
-          alt="Your composed release graphic"
-          src={
-            "data:image/svg+xml;charset=utf-8," +
-            encodeURIComponent(graphic(data))
-          }
+          role="img"
+          aria-label="Your composed release graphic"
+          dangerouslySetInnerHTML={{__html:graphic(data,dark?"dark":"light")}}
         />
       ) : blueprintReport && !blueprintReport.valid ? (
         <div className="creation-preview" role="alert">
@@ -365,6 +367,7 @@ const product: Product = {
   Editor,
   Preview,
   recoverDrafts: true,
+  designLanguage: "pip-v2",
   exports: [
     {id:'form-fixture',name:'Generated shared form · ZIP'},
     { id: "application", name: "Account-owned application · ZIP" },

@@ -96,7 +96,7 @@ export const blueprintSchema = {
       required: ["name", "font", "size", "spacing", "radius", "light", "dark"],
       properties: {
         name: string(120),
-        font: { enum: ["DM Sans", "system-ui", "Georgia"] },
+        font: { enum: ["Noto Sans", "DM Sans", "system-ui", "Georgia"] },
         size: { type: "number", minimum: 12, maximum: 24 },
         spacing: { type: "number", minimum: 8, maximum: 40 },
         radius: { type: "number", minimum: 0, maximum: 24 },

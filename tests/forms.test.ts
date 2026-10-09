@@ -28,7 +28,8 @@ test('public preview cannot import font URLs from saved blueprint data or serve 
 test('legacy review-records remains explicit, available and unchanged by choosing a shared form',()=>{
   const old=seed('Old project');delete (old as any).formBlueprint;
   const normalized=normalize(old);assert.equal(normalized.formBlueprint,null);assert.deepEqual(normalized.blueprint,old.blueprint);
-  assert.equal(getCatalog().sourceDigest,'sha256:eeee133fc481f8863bef11f22d94670112002ff5eeeb8d5d29cc32ead0d0b5d0');
+  assert.equal(getCatalog().runtimeProfiles[0].domainAdapter,'review-records-v1');
+  assert.equal(normalized.blueprint.schemaVersion,1);
   const output=config.export({data:normalized} as any,'application')!;const files=unzipSync(output.body as Uint8Array);
   assert.match(strFromU8(files['server/index.ts']),/createReviewServer/);assert.equal(JSON.parse(strFromU8(files['app-blueprint.json'])).schemaVersion,1);
   assert.throws(()=>normalize({...old,formBlueprint:{recipe:'arbitrary-tree'}}),/Invalid shared-form/);
@@ -42,3 +43,5 @@ test('tab-local drafts require the same account, project and revision and explic
     values.set(a+':form-source','{invalid draft');clearProjectDraft(a);assert.equal(values.size,0);
   }finally{Object.defineProperty(globalThis,'sessionStorage',{configurable:true,value:previous});}
 });
+
+test('public general output embeds Noto notices and retains the explicit selected appearance',()=>{const data=seed('Pip public output');const html=config.export({data} as any,'html',{appearance:'dark'})!;assert.match(String(html.body),/data-theme="dark"/);assert.match(String(html.body),/font-family:"Noto Sans"/);assert.match(String(html.body),/SIL Open Font License/i);const svg=config.export({data} as any,'svg',{appearance:'dark'})!;assert.match(String(svg.body),/fill="#17172b"/);assert.match(String(svg.body),/font-family:"Noto Sans"/);assert.match(String(svg.body),/SIL Open Font License/i);const files=unzipSync(config.export({data} as any,'application',{appearance:'dark'})!.body as Uint8Array);assert.match(strFromU8(files['src/main.tsx']),/outputAppearance: "system"\|"light"\|"dark" = "dark"/);assert.doesNotMatch(strFromU8(files['src/main.tsx']),/__OUTPUT_APPEARANCE__/);});

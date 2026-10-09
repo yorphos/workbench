@@ -136,3 +136,14 @@ body,
     animation: none;
   }
 }
+
+/* Pip component/layout adoption; review-records behavior remains unchanged. */
+.pip-ui .pilot-header{min-height:78px;padding:12px 20px}
+.pip-ui .pilot-mark{width:44px;height:44px;border-radius:14px;background:var(--pip-sun);color:var(--pip-ink)}
+.pip-ui .pilot-workspace{grid-template-columns:196px minmax(0,1fr)}
+.pip-ui .pilot-nav{padding:16px;gap:8px}
+.pip-ui .pilot-nav a{min-height:44px;border-radius:14px}
+.pip-ui .pilot-nav a[aria-current]{background:var(--pf-selected);color:var(--pf-selected-ink)}
+.pip-ui .pilot-main{padding:20px}
+.pip-ui .pilot-editor{border-radius:14px;padding:20px}
+@media(max-width:768px){.pip-ui .pilot-workspace{grid-template-columns:1fr}.pip-ui .pilot-header{padding:12px 16px}.pip-ui .pilot-nav{flex-wrap:nowrap;overflow:auto}.pip-ui .pilot-nav a{flex-shrink:0}.pip-ui .pilot-main{padding:16px}}

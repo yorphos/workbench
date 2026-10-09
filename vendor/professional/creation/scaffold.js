@@ -35,7 +35,8 @@ export function verifyCreationRelease() {
       throw new Error("Creation release file changed: " + name);
   return catalog;
 }
-export function buildScaffold(blueprint) {
+export function buildScaffold(blueprint, {appearance="system"}={}) {
+  if(!["system","light","dark"].includes(appearance))throw new TypeError("Invalid scaffold appearance");
   const validation = validateBlueprint(blueprint);
   if (!validation.valid)
     throw new Error(
@@ -64,6 +65,7 @@ export function buildScaffold(blueprint) {
     ) + "\n",
   );
   const substitutions = {
+    __OUTPUT_APPEARANCE__: JSON.stringify(appearance),
     __PRODUCT_ID__: JSON.stringify(blueprint.product.id),
     __PRODUCT_NAME__: JSON.stringify(blueprint.product.name),
   };

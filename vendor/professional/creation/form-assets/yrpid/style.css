@@ -5,30 +5,29 @@
   font-style: normal;
   font-display: swap;
 }
-/* Pip v2 typography and palette, with an original product-neutral identity motif.
+/* YRP design language (pip-ui.css) supplies palette, type, focus and dark theme; this file is YRPid layout.
    Shared control tokens apply to every screen; no per-page button overrides. */
 .yrpid {
-  --id-paper: #fffcf5;
-  --id-ink: #25253e;
-  --id-muted: #64666e;
-  --id-panel: #fff;
-  --id-soft: #f1f2ec;
-  --id-sun: #ffd653;
-  --id-sky: #dcf2ff;
-  --id-leaf: #e5efdf;
-  --id-border: #d8dcd8;
-  --id-control: #7a8594;
-  --id-focus: #1768a6;
-  --id-error: #a33228;
-  --id-error-bg: #fcebe7;
-  --id-success: #365f29;
-  --id-success-bg: #ebf2e7;
+  --id-paper: var(--pf-surface);
+  --id-ink: var(--pf-text);
+  --id-muted: var(--pf-muted);
+  --id-panel: var(--pf-surface-raised);
+  --id-soft: var(--pf-surface-muted);
+  --id-sun: var(--pf-selected);
+  --id-sky: var(--pip-sky-tint);
+  --id-leaf: var(--pf-success-bg);
+  --id-border: var(--pf-border);
+  --id-control: var(--pf-control-border);
+  --id-focus: var(--pf-focus);
+  --id-error: var(--pf-danger);
+  --id-error-bg: var(--pf-danger-bg);
+  --id-success: var(--pf-success-text);
+  --id-success-bg: var(--pf-success-bg);
   --id-radius-control: 16px;
   --id-radius-panel: 28px;
   --id-control-height: 48px;
-  --id-font-ui: "Noto Sans", system-ui, sans-serif;
-  --id-font-display: "Noto Sans", system-ui, sans-serif;
-  color-scheme: light;
+  --id-font-ui: var(--pip-font-ui);
+  --id-font-display: var(--pip-font-display);
   font-family: var(--id-font-ui);
   color: var(--id-ink);
   background: var(--id-paper);
@@ -130,7 +129,7 @@ p { margin: 0 0 20px; }
   font-weight: 600;
   margin: 0 0 14px;
 }
-.status-dot { display: inline-block; width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: #527345; }
+.status-dot { display: inline-block; width: 7px; height: 7px; flex-shrink: 0; border-radius: 50%; background: var(--pip-leaf-ink); }
 .intro { color: var(--id-muted); margin-bottom: 28px; }
 form { display: grid; gap: 8px; }
 label { font-size: 13px; font-weight: 600; }
@@ -157,8 +156,8 @@ button, .button {
   gap: 8px;
 }
 button:hover, .button:hover { background: var(--id-soft); }
-.primary { background: var(--id-ink); color: white; border-color: var(--id-ink); }
-.primary:hover { background: #3d3d58; }
+.primary { background: var(--pf-accent); color: var(--pf-accent-ink); border-color: var(--pf-accent); }
+.primary:hover { background: color-mix(in srgb, var(--pf-accent) 88%, var(--pf-text)); }
 .sign-in-form button, #signed-in-state .button { width: 100%; }
 .quiet { background: transparent; }
 button:disabled { opacity: .55; cursor: not-allowed; }
@@ -168,8 +167,8 @@ button[aria-busy="true"] { cursor: wait; }
 .divider::before, .divider::after { content: ""; height: 1px; flex: 1; background: var(--id-border); }
 .sign-in-note { color: var(--id-muted); text-align: center; font-size: 12px; margin: 14px 0 18px; }
 .notice { padding: 14px 16px; background: var(--id-soft); border: 1px solid var(--id-border); border-radius: 16px; font-size: 14px; overflow-wrap: anywhere; margin: 18px 0; }
-.notice[data-tone="error"] { background: var(--id-error-bg); color: var(--id-error); border-color: #d49e98; }
-.notice[data-tone="success"] { background: var(--id-success-bg); color: var(--id-success); border-color: #aac89c; }
+.notice[data-tone="error"] { background: var(--id-error-bg); color: var(--id-error); border-color: var(--id-error); }
+.notice[data-tone="success"] { background: var(--id-success-bg); color: var(--id-success); border-color: var(--pip-leaf-ink); }
 .sign-in-help { border-top: 1px solid var(--id-border); }
 summary { cursor: pointer; min-height: 44px; padding-block: 12px; font-size: 13px; font-weight: 600; }
 details p { font-size: 13px; color: var(--id-muted); margin: 8px 0 16px; }
@@ -180,13 +179,13 @@ details p { font-size: 13px; color: var(--id-muted); margin: 8px 0 16px; }
 fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 20px; }
 #account-controls { grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); }
 .card { background: var(--id-panel); border: 1px solid var(--id-border); border-radius: var(--id-radius-panel); padding: 24px; min-width: 0; }
-.profile-card { background: #f0f7f8; }
-.passkey-card { background: #fff7da; }
+.profile-card { background: var(--pip-sky-tint); }
+.passkey-card { background: var(--pf-warn-bg); }
 .sessions-card { grid-column: 1 / -1; }
 .section-heading { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
 .section-icon { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 12px; flex-shrink: 0; }
 .section-icon svg { width: 22px; height: 22px; fill: none; stroke: var(--id-ink); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
-.sky { background: #d3eaf5; }
+.sky { background: var(--pip-sky-tint); }
 .sun { background: var(--id-sun); }
 .leaf { background: var(--id-leaf); }
 .section-description { font-size: 13px; color: var(--id-muted); margin-bottom: 20px; }
@@ -209,7 +208,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 2
 .narrow h1 { font-size: 40px; }
 .narrow .card > p:first-child { margin-bottom: 16px; }
 footer { max-width: 1040px; margin: 24px auto; padding: 0 32px 24px; text-align: center; font-size: 12px; color: var(--id-muted); }
-.skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); padding: 12px 16px; z-index: 5; background: white; border: 2px solid var(--id-focus); border-radius: 12px; }
+.skip-link { position: fixed; top: 8px; left: 8px; transform: translateY(-150%); padding: 12px 16px; z-index: 5; background: var(--id-panel); border: 2px solid var(--id-focus); border-radius: 12px; }
 .skip-link:focus { transform: none; }
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; }
 @media (max-width: 800px) {
@@ -245,3 +244,6 @@ footer { max-width: 1040px; margin: 24px auto; padding: 0 32px 24px; text-align:
   button:disabled { opacity: 1; color: GrayText; }
   .section-icon svg { stroke: CanvasText; }
 }
+
+.theme-toggle { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 14px; font-size: 13px; min-height: 44px; white-space: nowrap; }
+header > .theme-toggle { margin-left: auto; }

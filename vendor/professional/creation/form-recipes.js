@@ -17,7 +17,7 @@ export function FormPage({blueprint,slots={},assetBase=''}) {
   const b=requireFormBlueprint(blueprint);
   if(b.recipe==='identity-entry')return h(React.Fragment,null,
     h('a',{className:'skip-link',href:'#main'},'Skip to content'),
-    h('header',null,h('a',{className:'brand',href:'/', 'aria-label':'YRPid home'},h('img',{className:'brand-mark',src:assetBase+'yrpid/identity-mark.svg',width:44,height:44,alt:'','aria-hidden':true}),h('span',null,'YRPid',h('small',null,'by ',h('b',null,'YRP')))),h('nav',{id:'account-nav','aria-label':'Account',hidden:true})),
+    h('header',null,h('a',{className:'brand',href:'/', 'aria-label':'YRPid home'},h('img',{className:'brand-mark',src:assetBase+'yrpid/identity-mark.svg',width:44,height:44,alt:'','aria-hidden':true}),h('span',null,'YRPid',h('small',null,'by ',h('b',null,'YRP')))),h('button',{className:'theme-toggle',type:'button','data-pf-theme-toggle':''},h('span',{'aria-hidden':true},'◐'),' ',h('span',{'data-pf-theme-label':''},'System')),h('nav',{id:'account-nav','aria-label':'Account',hidden:true})),
     h('main',{id:'main',tabIndex:-1,className:'sign-in-layout'},
       h('div',{className:'welcome-art','aria-hidden':true},slots.welcomeArtwork,h('p',null,b.welcome.caption),h('span',null,b.welcome.description)),
       h(FormCard,{className:'sign-in-form','aria-labelledby':'title'},
@@ -29,7 +29,7 @@ export function FormPage({blueprint,slots={},assetBase=''}) {
         h(FormDisclosure,{className:'sign-in-help',summary:b.help.summary},b.help.paragraphs.map((p,i)=>h('p',{key:i},p))))),h('footer',null,b.footer));
   const c=b.configuration;
   return h('main',null,
-    b.variant==='go-live'&&h('button',{className:'theme-toggle',type:'button','data-pf-theme-toggle':''},h('span',{'aria-hidden':true},'◐'),' ',h('span',{'data-pf-theme-label':''},'System')),
+    h('button',{className:'theme-toggle',type:'button','data-pf-theme-toggle':''},h('span',{'aria-hidden':true},'◐'),' ',h('span',{'data-pf-theme-label':''},'System')),
     h('a',{className:'brand pf-brand',href:'/'},slots.brandMark,h('span',{className:'pf-brand-copy'},h('span',{className:'pf-brand-name'},'go.yrp.sh'),h('span',{className:'pf-brand-signature'},h('span',null,'by'),' ',h('b',null,'YRP')))),
     h('h1',null,b.title),h('p',null,b.description),
     h('form',{id:'wrap','data-api':'/api/links'},

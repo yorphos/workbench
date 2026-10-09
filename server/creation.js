@@ -14,7 +14,7 @@ export function projectBlueprint(value) {
   const d = normalize(value);
   return { ...d.blueprint, theme: d.theme };
 }
-export function patternHTML(value) {
+export function patternHTML(value,options={}) {
   const d = normalize(value),
     b = createBlueprint(d.name, "list-detail", d.theme);
   b.screens[0] = {
@@ -23,7 +23,7 @@ export function patternHTML(value) {
     title: d.title,
     description: d.description,
   };
-  return previewBlueprint(b, { state: d.state }).html;
+  return previewBlueprint(b, { state: d.state,appearance:options.appearance||"light" }).html;
 }
 export function starterFiles(value) {
   const d = normalize(value),
@@ -52,12 +52,12 @@ export function starterFiles(value) {
       .replace("./creation/ui.js", "../vendor/foundation/creation/ui.js"),
   );
   files["src/main.tsx"] = strToU8(
-    `import React from 'react';import {createRoot} from 'react-dom/client';import {Recipe} from '../vendor/foundation/creation/ui.js';import {recipeFixture} from '../vendor/foundation/creation/fixture.js';import '../vendor/foundation/web/foundation.css';import '../vendor/foundation/creation/ui.css';import './theme.css';const trace=()=>document.getElementById('trace')!.textContent='Fixture callback requested; no application effect was applied.';createRoot(document.getElementById('root')!).render(<main className="pf-app"><Recipe {...recipeFixture(${JSON.stringify(d.state)})} recipe={${JSON.stringify(d.recipe)}} title={${JSON.stringify(d.title)}} description={${JSON.stringify(d.description)}} onCreate={trace} onAccept={trace} onDiscard={trace} onSave={trace} onSignIn={trace} onSelect={trace} onNavigate={trace}/><p id="trace" role="status">Fictional interface demo. Domain callbacks need an application adapter.</p></main>);`,
+    `import React from 'react';import {createRoot} from 'react-dom/client';import {Recipe} from '../vendor/foundation/creation/ui.js';import {recipeFixture} from '../vendor/foundation/creation/fixture.js';import '../vendor/foundation/web/foundation.css';import '../vendor/foundation/creation/ui.css';import '../vendor/foundation/web/pip-ui.css';import '../vendor/foundation/web/pip-fonts.css';import '../vendor/foundation/web/pip-components.css';import './theme.css';const trace=()=>document.getElementById('trace')!.textContent='Fixture callback requested; no application effect was applied.';createRoot(document.getElementById('root')!).render(<main className="pf-app"><Recipe {...recipeFixture(${JSON.stringify(d.state)})} state={${JSON.stringify(d.state)}} recipe={${JSON.stringify(d.recipe)}} title={${JSON.stringify(d.title)}} description={${JSON.stringify(d.description)}} onCreate={trace} onAccept={trace} onDiscard={trace} onSave={trace} onSignIn={trace} onSelect={trace} onNavigate={trace}/><p id="trace" role="status">Fictional interface demo. Domain callbacks need an application adapter.</p></main>);`,
   );
   files["README.md"] = strToU8(
     "# " +
       d.name +
-      "\n\nInterface demo only; fixture callbacks do not save, accept, send or sign in. Run npm ci and npm run build. Use the separate Application export for account-owned records and real review actions. Canonical MIT sources and DM Sans OFL notices are retained.\n",
+      "\n\nInterface demo only; fixture callbacks do not save, accept, send or sign in. Run npm ci and npm run build. Use the separate Application export for account-owned records and real review actions. Canonical Pip v2 components, MIT sources and Noto Sans/DM Sans OFL notices are retained.\n",
   );
   return files;
 }
@@ -72,6 +72,9 @@ export function registry(id) {
       "creation/ui.d.ts",
       "creation/ui.css",
       "web/tokens.css",
+      "web/pip-ui.css",
+      "web/pip-components.css",
+      "web/fonts/NotoSans-LICENSE.txt",
       "web/fonts.css",
       "web/fonts/dmsans-OFL.txt",
     ];
@@ -101,9 +104,13 @@ export function registry(id) {
                     source["web/fonts/font-" + i + ".ttf"].toString("base64") +
                     ') format("truetype")}',
                 )
-                .join("\n")
+                .join("\n")+'@font-face{font-family:"Noto Sans";font-weight:100 900;src:url(data:font/ttf;base64,'+source["web/fonts/NotoSans-Regular.ttf"].toString("base64")+') format("truetype")} .pip-ui{--pip-font-display:"Noto Sans",system-ui,sans-serif}'
             : source[name].toString(),
       }))
       .filter((f) => f.content !== undefined),
   };
 }
+
+export function publicFontCSS(){const files=profileFiles();return '@font-face{font-family:"Noto Sans";font-weight:100 900;src:url(data:font/ttf;base64,'+files["web/fonts/NotoSans-Regular.ttf"].toString("base64")+') format("truetype")}';}
+
+export function publicFontLicense(){return profileFiles()["web/fonts/NotoSans-LICENSE.txt"].toString();}

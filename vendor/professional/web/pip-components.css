@@ -1,0 +1,85 @@
+/* Layout and semantic components consume Preview's canonical roles. */
+.pip-ui button,.pip-ui .button{min-height:44px;border-color:var(--pf-control-border);border-radius:var(--pf-button-radius);font-weight:var(--pf-button-weight);font-size:14px}
+.pip-ui .primary,.pip-ui .pf-ui-primary{background:var(--pf-accent);color:var(--pf-accent-ink);border-color:var(--pf-accent)}
+.pip-ui :is(input,select,textarea){border-color:var(--pf-control-border);border-radius:var(--pf-input-radius)}
+.pip-ui :is(h1,h2,h3){letter-spacing:-.02em}
+.pip-ui :is(.active,[aria-current],.selected){background:var(--pf-selected);color:var(--pf-selected-ink);font-weight:var(--pf-selected-weight);border-color:var(--pf-control-border)}
+.pip-ui :is(.feedback,[role=alert]){border-radius:var(--pf-control-radius);padding:12px 16px;background:var(--pf-success-bg);color:var(--pf-success-text)}
+.pip-ui :is(.feedback.error,[role=alert]){background:var(--pf-danger-bg);color:var(--pf-danger);border:1px solid var(--pf-danger)}
+.pip-ui details{border:1px solid var(--pf-control-border);border-radius:var(--pf-control-radius);padding:0 12px;margin:12px 0;background:var(--pf-surface-raised)}
+.pip-ui summary{min-height:44px;padding:10px 0;cursor:pointer}
+.pip-ui .pf-ui{border-radius:var(--pf-tile-radius);font-family:var(--pf-font-body);padding:20px}
+.pip-ui .pf-ui :is(input,textarea,select){min-height:44px;border-color:var(--pf-control-border);border-radius:var(--pf-input-radius)}
+.pip-ui .pf-ui-panel{border-radius:var(--pf-tile-radius)}
+.pip-ui .pf-ui nav [aria-current]{background:var(--pf-selected);color:var(--pf-selected-ink)}
+.pip-ui .studio-header{height:78px;padding:0 20px;gap:12px}
+.pip-ui .product-mark{background:var(--pip-sun);color:var(--pip-ink);border:0;border-radius:14px}
+.pip-ui .studio-header nav{gap:12px}
+.pip-ui .header-links{margin:0;position:relative;border:0;background:transparent;padding:0}
+.pip-ui .header-links summary{list-style:none;border:1px solid var(--pf-control-border);border-radius:14px;padding:10px 14px}
+.pip-ui .header-links summary::-webkit-details-marker{display:none}
+.pip-ui .header-links-content{position:absolute;right:0;top:52px;z-index:20;min-width:220px;padding:12px;background:var(--pf-surface-raised);border:1px solid var(--pf-control-border);border-radius:14px;box-shadow:0 12px 30px var(--pf-shadow);display:grid;gap:8px}
+.pip-ui .header-links-content a{min-height:44px;padding:12px;border-radius:10px}
+.pip-ui .header-links-content a:hover{background:var(--pf-selected-soft);color:var(--pf-selected-ink)}
+.pip-ui .appearance-toggle{width:44px;padding:0}
+.pip-ui .editor-jump{display:none}
+.pip-ui .workspace-shell{grid-template-columns:196px minmax(0,1fr);min-height:calc(100dvh - 78px)}
+.pip-ui .workspace-drawer{margin:0;border:0;border-right:1px solid var(--pf-border);border-radius:0;padding:0;background:var(--pf-surface)}
+.pip-ui .workspace-drawer>summary{display:none}
+.pip-ui .workspace-sidebar{width:auto;padding:16px;min-height:100%;border:0;gap:14px}
+.pip-ui .workspace-sidebar .sidebar-heading{margin:12px 0 8px;letter-spacing:.06em;font-size:11px}
+.pip-ui .workspace-sidebar nav button{border-radius:12px;min-height:44px;padding:10px}
+.pip-ui .workspace-sidebar nav button{min-width:0;width:100%}.pip-ui .workspace-sidebar nav button span{min-width:0}.pip-ui .workspace-sidebar nav button svg{flex-shrink:0}
+.pip-ui .workspace-sidebar .sidebar-bottom{margin-top:24px}
+.pip-ui .workspace-main{padding:0;min-width:0}
+.pip-ui .project-heading{padding:16px 20px;margin:0;border-bottom:1px solid var(--pf-border);gap:16px;align-items:center}
+.pip-ui .project-heading h1{font-size:24px;margin:0 0 4px}
+.pip-ui .project-heading .kicker{display:none}
+.pip-ui .project-heading .actions{gap:8px}
+.pip-ui .module-tabs{padding:10px 16px;margin:0;border-bottom:1px solid var(--pf-border);gap:8px;flex-wrap:nowrap;overflow:auto;scroll-padding:12px}
+.pip-ui .module-tabs button{flex-shrink:0;border-radius:14px;padding:10px 14px}
+.pip-ui .editor-layout{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:0;margin:0;align-items:stretch}
+.pip-ui .editor-panel{grid-column:2;grid-row:1;border:0;border-left:1px solid var(--pf-border);border-radius:0;background:var(--pf-surface-raised);padding:0;min-width:0}
+.pip-ui .preview-panel{grid-column:1;grid-row:1;border:0;border-radius:0;padding:0;min-width:0}
+.pip-ui :is(.editor-panel,.preview-panel)>.panel-head{padding:16px 20px;border-bottom:1px solid var(--pf-border);margin:0}
+.pip-ui .editor-panel fieldset{padding:16px 20px;margin:0;min-width:0}
+.pip-ui .preview-panel .preview-controls{margin:0;padding:12px 16px;border-bottom:1px solid var(--pf-border)}
+.pip-ui .creation-preview{padding:20px}
+.pip-ui .preview-label{padding:12px 16px;margin:0;background:var(--pf-surface-muted);color:var(--pf-muted);font-size:12px}
+.pip-ui .form-section{border-top:1px solid var(--pf-border);margin-top:20px;padding-top:16px}
+.pip-ui .form-section h3{font-size:16px;margin:0 0 8px}
+.pip-ui .field-help,.pip-ui .editor-description{color:var(--pf-muted);font-size:13px;line-height:1.5}
+.pip-ui .editor-navigation{display:flex;gap:8px;padding:8px 16px;border-bottom:1px solid var(--pf-border)}.pip-ui .editor-navigation a{display:flex;align-items:center;min-height:44px;padding:10px 14px;border:1px solid var(--pf-control-border);border-radius:14px;color:var(--pf-text);text-decoration:none}
+.pip-ui .public-main{padding-top:28px}
+.pip-ui .eyebrow{margin-bottom:28px}
+.pip-ui .hero-copy{gap:32px}
+.pip-ui .hero-specimen{box-shadow:0 20px 60px -30px var(--pf-shadow);border-radius:var(--pf-tile-radius)}
+.pip-ui .module-card{border-radius:var(--pf-tile-radius)}
+.pip-ui .review-panel{padding:20px}
+.pip-ui .graphic-preview>svg{display:block;width:100%;height:auto}
+@media(min-width:1001px){.pip-ui .editor-panel,.pip-ui .preview-panel{max-height:calc(100dvh - 246px);overflow:auto;overscroll-behavior:contain}}
+@media(max-width:1000px){.pip-ui .workspace-shell{grid-template-columns:160px minmax(0,1fr)}.pip-ui .editor-layout{grid-template-columns:minmax(0,1fr)}.pip-ui .editor-panel,.pip-ui .preview-panel{grid-column:1;grid-row:auto;border-left:0;border-bottom:1px solid var(--pf-border)}.pip-ui .project-heading{flex-wrap:wrap}.pip-ui .editor-navigation{display:flex;gap:8px;padding:8px 16px;border-bottom:1px solid var(--pf-border);background:var(--pf-surface);position:sticky;top:0;z-index:5}.pip-ui .editor-navigation a{min-height:44px;display:flex;align-items:center;padding:10px 14px;border:1px solid var(--pf-control-border);border-radius:14px;color:var(--pf-text);text-decoration:none}}
+@media(max-width:600px){.pip-ui .studio-header{height:70px;padding:0 12px}.pip-ui .studio-header nav{gap:8px}.pip-ui .studio-header .pf-brand-name{font-size:23px}.pip-ui .product-mark{width:38px;height:38px}.pip-ui .workspace-shell{display:block;min-height:calc(100dvh - 70px)}.pip-ui .workspace-drawer{border-bottom:1px solid var(--pf-border);border-right:0}.pip-ui .workspace-drawer>summary{display:block;padding:10px 16px;font-weight:600}.pip-ui .workspace-sidebar{padding:12px 16px;min-height:0}.pip-ui .project-heading{padding:12px 16px;gap:12px}.pip-ui .project-heading h1{font-size:20px}.pip-ui .project-heading button{font-size:13px;padding:9px 12px}.pip-ui .module-tabs{padding:8px 12px}.pip-ui .editor-panel fieldset{padding:12px 16px}.pip-ui :is(.editor-panel,.preview-panel)>.panel-head{padding:12px 16px}.pip-ui .panel-head span{display:none}.pip-ui .creation-preview{padding:12px}.pip-ui .public-main{padding:24px 16px}.pip-ui .hero-copy{gap:24px}.pip-ui .inline-fields{gap:8px}.pip-ui .inline-fields .pf-ui-field{font-size:12px}.pip-ui .pf-ui{padding:16px}.pip-ui .studio-header .header-links-content{right:0;max-width:calc(100vw - 24px)}}
+@media(prefers-reduced-motion:reduce){.pip-ui *, .pip-ui *::before,.pip-ui *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+
+.pip-ui .pf-dialog{border:1px solid var(--pf-control-border);border-radius:var(--pf-modal-radius);background:var(--pf-surface-raised);padding:28px;width:min(560px,calc(100vw - 24px));font-family:var(--pf-font-body);max-height:calc(100dvh - 24px);overflow:auto}
+.pip-ui .pf-dialog-title{font-family:var(--pip-font-display);font-size:26px;color:var(--pf-text)}
+.pip-ui .pf-dialog-close{width:44px;height:44px;min-height:44px;border-radius:14px;background:var(--pf-surface-raised);color:var(--pf-text)}
+.pip-ui .pf-dialog-overlay{background:var(--pf-scrim)}
+.pip-ui .pip-export-dialog{width:min(940px,calc(100vw - 24px))}
+.pip-ui .export-layout{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:24px;margin-top:20px}
+.pip-ui .export-layout h3{font-size:16px;margin-bottom:12px}
+.pip-ui .export-proof{min-width:0;border:1px solid var(--pf-border);border-radius:14px;padding:12px;background:var(--pf-surface)}
+.pip-ui .export-proof .generated-form-preview{height:280px}
+.pip-ui .export-proof .creation-preview{max-height:280px;overflow:auto;padding:8px}
+.pip-ui .export-proof p{font-size:12px;line-height:1.5;margin:12px 0 0;color:var(--pf-muted)}
+.pip-ui .export-options{gap:8px;margin:0}
+.pip-ui .export-options button{justify-content:flex-start;min-height:48px;padding:12px 14px}
+@media(max-width:600px){.pip-ui .pf-dialog{padding:24px 16px}.pip-ui .pf-dialog-title{font-size:23px;padding-right:32px}.pip-ui .export-layout{grid-template-columns:1fr;gap:16px}.pip-ui .export-proof{display:none}.pip-ui .pf-dialog-close{right:8px;top:8px}}
+.pip-ui .module-tabs button.active,.pip-ui .workspace-sidebar nav button.active{background:var(--pf-selected);color:var(--pf-selected-ink);font-weight:600}
+@media(max-width:600px){.pip-ui .studio-header{flex-direction:row;align-items:center;justify-content:space-between;gap:8px;flex-wrap:nowrap}.pip-ui .studio-header nav{width:auto;flex-wrap:nowrap;justify-content:flex-end}.pip-ui .studio-brand{gap:8px}.pip-ui .studio-header .pf-brand-name{font-size:20px}.pip-ui .studio-header .pf-brand-signature{font-size:10px}.pip-ui .product-mark{width:32px;height:32px;border-radius:10px}.pip-ui .product-mark svg{width:22px;height:22px}.pip-ui .project-heading{text-align:left;align-items:flex-start}.pip-ui .project-heading .actions{justify-content:flex-start}}
+
+@media(min-width:601px) and (max-width:1000px){.pip-ui .workspace-shell{display:block}.pip-ui .workspace-drawer{border-bottom:1px solid var(--pf-border);border-right:0}.pip-ui .workspace-drawer>summary{display:block;padding:10px 16px}.pip-ui .workspace-sidebar{min-height:0;padding:16px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.pip-ui .studio-header{flex-direction:row;flex-wrap:nowrap;height:78px}.pip-ui .studio-header nav{width:auto;flex-wrap:nowrap}.pip-ui .project-heading{flex-direction:row;text-align:left;align-items:flex-start}}
+
+.pip-ui .project-actions{display:contents;border:0;padding:0;margin:0}.pip-ui .project-actions>summary{display:none}.pip-ui .project-action-options{display:contents}
+@media(max-width:600px){.pip-ui .project-actions{display:block;position:relative;border:0;background:transparent;flex-shrink:0}.pip-ui .project-actions>summary{display:block;min-height:44px;list-style:none;padding:12px 10px;border:1px solid var(--pf-control-border);border-radius:14px;font-size:12px;font-weight:400}.pip-ui .project-actions>summary::-webkit-details-marker{display:none}.pip-ui .project-action-options{display:flex;flex-direction:column;gap:8px;position:absolute;right:0;top:52px;z-index:20;width:224px;padding:12px;background:var(--pf-surface-raised);border:1px solid var(--pf-control-border);border-radius:14px;box-shadow:0 12px 30px var(--pf-shadow)}.pip-ui .project-heading .actions{gap:8px}.pip-ui .project-heading .actions>button{font-size:12px;padding:9px 10px}.pip-ui .project-heading .actions>button svg{width:14px;height:14px}}

@@ -34,6 +34,7 @@ export function ThemeFields({
           value={value.font}
           onChange={(e) => onChange({ ...value, font: e.target.value })}
         >
+          <option>Noto Sans</option>
           <option>DM Sans</option>
           <option>system-ui</option>
           <option>Georgia</option>

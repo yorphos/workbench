@@ -16,6 +16,7 @@ test("public repertoire is responsive, branded, and keyboard usable", async ({
       () => document.documentElement.scrollWidth <= innerWidth,
     ),
   ).toBe(true);
+  await page.locator(".header-links summary").click();
   await page.getByRole("link", { name: "Explore", exact: true }).click();
   await expect(
     page.getByRole("heading", { name: "Try the materials" }),
@@ -67,6 +68,7 @@ test("account workflow saves, publishes, comments, exports and invites safely", 
     .fill("A considered revision");
   await page.getByRole("button", { name: "Save changes", exact: true }).click();
   await expect(page.getByText("Saved · Revision 2")).toBeVisible();
+  if(await page.locator(".project-actions summary").isVisible())await page.locator(".project-actions summary").click();
   await page
     .getByRole("button", { name: "Publish for review", exact: true })
     .click();
@@ -92,6 +94,11 @@ test("account workflow saves, publishes, comments, exports and invites safely", 
     "A considered revision",
   );
   await page.keyboard.press("Escape");
+  if (await page.locator(".workspace-drawer > summary").isVisible()) {
+    await expect(page.locator(".workspace-drawer")).not.toHaveAttribute("open", "");
+    await page.locator(".workspace-drawer > summary").click();
+    await expect(page.locator(".workspace-drawer")).toHaveAttribute("open", "");
+  }
   await page
     .getByRole("button", { name: "Team & client access", exact: true })
     .click();
@@ -149,6 +156,11 @@ test("an account reviews exact email and attachments before one recorded send", 
   await page
     .getByRole("button", { name: "Create project", exact: true })
     .click();
+  if (await page.locator(".workspace-drawer > summary").isVisible()) {
+    await expect(page.locator(".workspace-drawer")).not.toHaveAttribute("open", "");
+    await page.locator(".workspace-drawer > summary").click();
+    await expect(page.locator(".workspace-drawer")).toHaveAttribute("open", "");
+  }
   await page
     .getByRole("button", { name: "Mail connections", exact: true })
     .click();

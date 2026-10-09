@@ -51,6 +51,12 @@
     "creation/composition.d.ts": "professional/creation/composition.d.ts",
     "creation/composition-schema.js": "professional/creation/composition-schema.js",
     "creation/composition-validator.js": "professional/creation/composition-validator.js",
-    "creation/composition-export.js": "professional/creation/composition-export.js"
+    "creation/composition-export.js": "professional/creation/composition-export.js",
+    "web/pip-ui.css": "professional/web/pip-ui.css",
+    "web/pip-fonts.css": "professional/web/pip-fonts.css",
+    "web/pip-components.css": "professional/web/pip-components.css",
+    "shared/pip-language.js": "professional/shared/pip-language.js",
+    "web/fonts/NotoSans-Regular.ttf": "professional/creation/form-assets/yrpid/fonts/NotoSans-Regular.ttf",
+    "web/fonts/NotoSans-LICENSE.txt": "professional/creation/form-assets/yrpid/fonts/NotoSans-LICENSE.txt"
   }
 }

@@ -29,6 +29,10 @@ import {
   DialogFooter,
 } from "./dialog";
 import "./studio.css";
+import "../web/pip-ui.css";
+import "../web/pip-fonts.css";
+import "../web/pip-components.css";
+import {useAppearance,resolvedAppearance} from "./appearance";
 import {projectDraftKey,readProjectDraft,writeProjectDraft,clearProjectDraft} from './project-drafts';
 export type Project = {
   id: string;
@@ -61,6 +65,7 @@ export type Product = {
   Preview: ComponentType<{ data: any; module: string }>;
   exports: { id: string; name: string }[];
   recoverDrafts?: boolean;
+  designLanguage?: "pip-v2";
 };
 const base = import.meta.env.BASE_URL;
 const path = (value: string) => base + value;
@@ -89,12 +94,15 @@ export {Field} from '../creation/ui.js';
 import {Field} from '../creation/ui.js';
 import '../creation/ui.css';
 function Header({ product, email }: { product: Product; email?: string }) {
-  const [appearance,setAppearance]=useState(() => {try{return localStorage.getItem('yrp:'+product.id+':appearance') || (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light');}catch{return 'light';}});
-  useEffect(()=>{document.documentElement.dataset.pfTheme=appearance;try{localStorage.setItem('yrp:'+product.id+':appearance',appearance);}catch{}},[appearance]);
+  const {mode,dark,setAppearance}=useAppearance(product.id);
+  const appearance=dark?'dark':'light';
+  useEffect(()=>{if(product.designLanguage==='pip-v2')document.body.classList.add('pip-ui');return ()=>{if(product.designLanguage==='pip-v2')document.body.classList.remove('pip-ui');};},[product.designLanguage]);
   return (
     <header className="studio-header">
       <Brand product={product} />
       <nav aria-label="Product"><button className="appearance-toggle" aria-label={"Switch to " + (appearance === "dark" ? "light" : "dark") + " appearance"} onClick={()=>setAppearance(appearance === "dark" ? "light" : "dark")}>{appearance === "dark" ? <Sun size={16}/> : <Moon size={16}/>}</button>
+        <details className="header-links"><summary>Links</summary><div className="header-links-content">
+        <label>Appearance<select aria-label="Editor appearance" value={mode} onChange={e=>setAppearance(e.target.value as any)}><option value="system">System</option><option value="light">Light</option><option value="dark">Dark</option></select></label>
         <a href="/">Toolbox</a><a href={path("recipes")}>Explore</a>
         <a href={path("docs")}>Documentation</a>
         {email ? (
@@ -112,9 +120,22 @@ function Header({ product, email }: { product: Product; email?: string }) {
             Open workspace <ArrowUpRight size={15} />
           </a>
         )}
+        </div></details>
       </nav>
     </header>
   );
+}
+function WorkspaceNavigation({children,hasProject,pip}:{children:ReactNode;hasProject:boolean;pip:boolean}){
+  const [open,setOpen]=useState(true);
+  useEffect(()=>{const media=matchMedia('(max-width:1000px)');const update=()=>setOpen(!media.matches||!hasProject);update();media.addEventListener('change',update);return ()=>media.removeEventListener('change',update);},[hasProject]);
+  if(!pip)return <>{children}</>;
+  return <details className="workspace-drawer" open={open} onToggle={e=>setOpen(e.currentTarget.open)}><summary>Workspace & projects</summary>{children}</details>;
+}
+function ProjectActions({children,pip}:{children:ReactNode;pip:boolean}){
+ const [open,setOpen]=useState(true),[compact,setCompact]=useState(false);
+ useEffect(()=>{const media=matchMedia('(max-width:600px)');const update=()=>{setCompact(media.matches);setOpen(!media.matches);};update();media.addEventListener('change',update);return ()=>media.removeEventListener('change',update);},[]);
+ if(!pip)return <>{children}</>;
+ return <details className="project-actions" open={open} onToggle={e=>setOpen(e.currentTarget.open)}><summary>More actions</summary><div className="project-action-options" onClick={e=>{if(compact&&(e.target as HTMLElement).closest('button'))setOpen(false);}}>{children}</div></details>;
 }
 function Public({ product }: { product: Product }) {
   const [data, setData] = useState(product.seed("Northstar Studio")),
@@ -447,7 +468,7 @@ export function Studio({ product }: { product: Product }) {
           "Content-Type": "application/json",
           "X-Studio-Request": "1",
         },
-        body: JSON.stringify({ format, revision: project.revision }),
+        body: JSON.stringify({ format, revision: project.revision, ...(product.designLanguage==='pip-v2'?{appearance:resolvedAppearance()}: {}) }),
       },
     );
     if (!response.ok) throw new Error((await response.json()).error);
@@ -503,9 +524,9 @@ export function Studio({ product }: { product: Product }) {
   return (
     <>
       <Header product={product} email={session.account.email} />
-      {project&&product.recoverDrafts&&<a className="editor-jump" href="#project-editor">Skip to editor</a>}
+
       <div className="workspace-shell">
-        <aside className="workspace-sidebar">
+        <WorkspaceNavigation hasProject={!!project} pip={product.designLanguage==='pip-v2'}><aside className="workspace-sidebar">
           <div className="sidebar-heading">YOUR WORKSPACE</div>
           <Field label="Workspace">
             <select
@@ -586,7 +607,7 @@ export function Studio({ product }: { product: Product }) {
               <BookOpen size={16} /> Product guide
             </a>
           </div>
-        </aside>
+        </aside></WorkspaceNavigation>
         <main className="workspace-main">
           {error && (
             <div className="feedback error" role="alert">
@@ -639,9 +660,7 @@ export function Studio({ product }: { product: Product }) {
                   </span>
                 </div>
                 <div className="actions">
-                  {!readonly && (
-                    <>
-                      <button
+                  {!readonly&&<>                      <button
                         disabled={busy || !dirty}
                         className="primary"
                         onClick={() =>
@@ -663,7 +682,14 @@ export function Studio({ product }: { product: Product }) {
                       >
                         <Check size={16} /> Save changes
                       </button>
-                      {product.recoverDrafts&&dirty&&<button type="button" onClick={()=>{if(draftKey)clearProjectDraft(draftKey,project.revision);setDraft({...product.seed(project.data.name),...structuredClone(project.data)});setNotice('Local draft discarded. Saved content restored.');}}>Discard local draft</button>}
+                      </>}
+                  <button
+                    disabled={busy || dirty}
+                    onClick={() => setDialog("exports")}
+                  >
+                    <Download size={16} /> Export
+                  </button>
+                  <ProjectActions pip={product.designLanguage==='pip-v2'}>{!readonly&&<>{product.recoverDrafts&&dirty&&<button type="button" onClick={()=>{if(draftKey)clearProjectDraft(draftKey,project.revision);setDraft({...product.seed(project.data.name),...structuredClone(project.data)});setNotice('Local draft discarded. Saved content restored.');}}>Discard local draft</button>}
                       <button
                         disabled={busy || dirty}
                         onClick={() =>
@@ -680,9 +706,7 @@ export function Studio({ product }: { product: Product }) {
                       >
                         Publish for review
                       </button>
-                    </>
-                  )}
-                  <button
+</>}                  <button
                     disabled={busy || dirty || readonly}
                     onClick={() =>
                       run(async () => {
@@ -698,12 +722,7 @@ export function Studio({ product }: { product: Product }) {
                   >
                     Duplicate
                   </button>
-                  <button
-                    disabled={busy || dirty}
-                    onClick={() => setDialog("exports")}
-                  >
-                    <Download size={16} /> Export
-                  </button>
+</ProjectActions>
                 </div>
               </div>
               <nav className="module-tabs" aria-label="Tools">
@@ -724,6 +743,7 @@ export function Studio({ product }: { product: Product }) {
                   Review & evidence
                 </button>
               </nav>
+              {product.designLanguage==='pip-v2'&&module!=='review'&&<nav className="editor-navigation" aria-label="Editor panels"><a href="#project-editor">Skip to editor</a><a href="#project-preview">Preview</a></nav>}
               {module === "review" ? (
                 <section className="review-panel">
                   <h2>Published revisions</h2>
@@ -871,7 +891,7 @@ export function Studio({ product }: { product: Product }) {
                       draftKey={draftKey&&!readonly?draftKey+':r'+project.revision:undefined}
                     />
                   </section>
-                  <section className="preview-panel">
+                  <section className="preview-panel" id="project-preview" tabIndex={-1}>
                     <div className="panel-heading">
                       <Layers size={16} />
                       <h2>Live preview</h2>
@@ -983,7 +1003,7 @@ export function Studio({ product }: { product: Product }) {
           }
         }}
       >
-        <DialogContent>
+        <DialogContent className={product.designLanguage==='pip-v2'?"pip-dialog "+(dialog==='exports'?"pip-export-dialog":""):undefined}>
           <DialogTitle>
             {
               {
@@ -1063,7 +1083,9 @@ export function Studio({ product }: { product: Product }) {
             </form>
           )}
           {dialog === "exports" && (
-            <div className="export-options">
+            <div className="export-layout">
+            {product.designLanguage==='pip-v2'&&draft&&<section className="export-proof" aria-label="Export proof"><h3>Selected screen</h3><product.Preview data={draft} module={module}/><p>Public exports use Noto Sans. Auth and transactions require your app-owned adapters.</p></section>}
+            <section><h3>Choose an output</h3><div className="export-options">
               {[
                 ...product.exports,
                 ...(!readonly
@@ -1085,7 +1107,7 @@ export function Studio({ product }: { product: Product }) {
                   <ArrowUpRight size={15} />
                 </button>
               ))}
-            </div>
+            </div></section></div>
           )}
           {dialog === "import" && (
             <Field label="Choose a .yrp-kit.zip file">

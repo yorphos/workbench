@@ -416,7 +416,8 @@ export function createStudio(
             config.id + "-project.yrp-kit.zip",
           );
         }
-        const output = await config.export(p, b.format);
+        requireThat(b.appearance===undefined || ["system","light","dark"].includes(b.appearance),400,"Unsupported output appearance.");
+        const output = await config.export(p, b.format, {appearance:b.appearance});
         if (
           output?.body &&
           output.body.includes?.("</head>") &&

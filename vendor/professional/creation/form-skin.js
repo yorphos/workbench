@@ -14,5 +14,6 @@ export function formSkinCSS(skin,variant){
   if(!['woff2','truetype'].includes(format))throw new TypeError('Unsupported display font format');
   const role=variant==='yrpid-v2'?'.yrpid{--id-font-display:':variant==='go-live'?'.pip-ui{--pip-font-display:':null;
   if(!role)throw new TypeError('This form variant has no display-font adapter');
-  return '@font-face{font-family:'+JSON.stringify(family)+';src:url('+JSON.stringify(url)+') format('+JSON.stringify(format)+');font-weight:300 700;font-style:normal;font-display:swap}'+role+JSON.stringify(family)+',system-ui,sans-serif}';
+  const secondary=variant==='yrpid-v2'?';--pip-font-display:'+JSON.stringify(family)+',system-ui,sans-serif':'';
+  return '@font-face{font-family:'+JSON.stringify(family)+';src:url('+JSON.stringify(url)+') format('+JSON.stringify(format)+');font-weight:300 700;font-style:normal;font-display:swap}'+role+JSON.stringify(family)+',system-ui,sans-serif'+secondary+'}';
 }

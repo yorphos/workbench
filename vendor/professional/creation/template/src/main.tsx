@@ -16,6 +16,9 @@ import {
 } from "../vendor/foundation/react/dialog";
 import "../vendor/foundation/web/foundation.css";
 import "../vendor/foundation/creation/ui.css";
+import "../vendor/foundation/web/pip-ui.css";
+import "../vendor/foundation/web/pip-fonts.css";
+import "../vendor/foundation/web/pip-components.css";
 import "./app.css";
 import "./theme.css";
 type Item = {
@@ -27,6 +30,7 @@ type Item = {
   proposal: null | { name: string; details: string; digest: string };
 };
 const base = import.meta.env.BASE_URL;
+const outputAppearance: "system"|"light"|"dark" = __OUTPUT_APPEARANCE__;
 function App() {
   const [session, setSession] = useState<any>(null),
     [items, setItems] = useState<Item[]>([]),
@@ -37,8 +41,9 @@ function App() {
     [busy, setBusy] = useState(false),
     [confirm, setConfirm] = useState(false),
     [appearance, setAppearance] = useState(
-      () => localStorage.getItem("appearance") || "light",
+      () => {const saved=localStorage.getItem("appearance"),mode=saved==="light"||saved==="dark"?saved:outputAppearance;return mode==="system"?(matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light"):mode;},
     );
+  useEffect(()=>{document.documentElement.dataset.pfTheme=appearance;},[appearance]);
   const current = useRef(""),
     abort = useRef(new AbortController()),
     generation = useRef(0);

@@ -15,3 +15,22 @@ Workbench agent migration v1 creates workbench_schema and workbench_operations a
 Delegated routes default closed. Operations supplies ECOSYSTEM_SERVICE_ID, ECOSYSTEM_SERVICE_KEY and ECOSYSTEM_TRUST_KEYS at runtime. Explicit host environment bindings may supply AGENT_GRANTS_FILE and WORKBENCH_AGENT_ACCOUNTS_FILE, both outside the checkout, mode 0600. The account binding has `{"schemaVersion":1,"owners":{"standing-grant-owner":"verified-Google-account-SHA256"}}`; resolve it from an already verified accounts row, never from an email or an agent argument. AGENT_GRANTS_FILE uses the existing Foundation clients/grants contract, explicit Workbench capabilities and workspace resources; artifacts.export also needs a format constraint. Revoke the client/grant to deny retries and recovery reads. Grant files are re-read at dispatch. Missing provisioning does not prevent normal Google workspaces or anonymous catalog reads. Public ingress strips service assertions; access through a browser cannot authenticate these routes.
 
 Do not install live gateway grants as part of the disposable pilot. Keep that acceptance under Foundation #55/#56. The pilot runs outside the workspace with fresh data and synthetic authority, no production services, repository creation, messages or paid providers.
+
+## Current Pip v2 composition language
+
+The complete editor/shell and new generated defaults use Foundation's exact
+Preview-owned Pip language delivery. See vendor/professional/web/pip-ui.css and
+vendor/professional/shared/pip-language.js for checked source identity. Public
+Noto Sans fonts retain the OFL notice; no Breeze binary is bundled. Host appearance
+is explicit in Links → Appearance and drives preview and export. Saved custom
+themes are preserved; Use Pip v2 defaults is an explicit edit. On phones, workspace
+management and secondary project actions use native disclosures, while Save,
+Export, tool navigation and editing remain directly available. Invalid/raw drafts
+keep the last valid content and preserve account/project/revision isolation.
+
+Shared identity/link bodies are declaratively generated. Standalone ZIP fixtures
+open after extraction and provide mock completion only. Native auth, link services,
+fonts/skins and Pip geometry remain explicit app-owned adapters. Current native
+references are YRPid 0145ad3c and Go df933875; old comparisons are historical.
+Private configured-font parity and public fallback typography are separate checks.
+No live service, credential or data change is part of source review/publication.

@@ -2,6 +2,8 @@ import { agentRouteFor } from "./agent.js";
 import {
   starterFiles,
   patternHTML,
+  publicFontCSS,
+  publicFontLicense,
   registry,
   projectBlueprint,
 } from "./creation.js";
@@ -32,9 +34,9 @@ export const config = {
     }),
   extras: starterFiles,
   registry,
-  formRoute({path,base,method,input}) {
+  formRoute({path,url,base,method,input}) {
     try {
-      if(path==='/api/form-preview'&&method==='POST')return {body:renderFormDocument(input,{assetBase:base+'api/form-assets/',fixtureURL:base+'api/form-fixture.js'}),mime:'text/html'};
+      if(path==='/api/form-preview'&&method==='POST')return {body:renderFormDocument(input,{assetBase:base+'api/form-assets/',fixtureURL:base+'api/form-fixture.js',appearance:url?.searchParams.get('appearance')||'system'}),mime:'text/html'};
       if(path==='/api/form-fixture.js')return {body:formFixtureScript(),mime:'text/javascript'};
       if(path.startsWith('/api/form-assets/')) {
         const name=path.slice('/api/form-assets/'.length);
@@ -44,12 +46,15 @@ export const config = {
       return null;
     }catch(error){error.status=400;throw error;}
   },
-  export(p, format) {
+  export(p, format, options={}) {
+    const appearance=options.appearance||"light";
+    if(!["light","dark","system"].includes(appearance))throw new TypeError("Invalid export appearance");
+    const doc=(title,body,t)=>documentHTML(title,body,t,{appearance,fontCSS:publicFontCSS()}).replace("</head>",'<meta name="font-license" content="'+escapeHTML(publicFontLicense())+'"> </head>');
     const d = p.data;
-    if(format==='form-fixture')return {body:Buffer.from(zipSync(buildFormExport(d.formBlueprint))),mime:'application/zip',name:'generated-form-fixture.zip'};
+    if(format==='form-fixture')return {body:Buffer.from(zipSync(buildFormExport(d.formBlueprint,options))),mime:'application/zip',name:'generated-form-fixture.zip'};
     if (format === "application")
       return {
-        body: Buffer.from(zipSync(buildScaffold(projectBlueprint(d)))),
+        body: Buffer.from(zipSync(buildScaffold(projectBlueprint(d),{appearance}))),
         mime: "application/zip",
         name: "application.zip",
       };
@@ -69,7 +74,7 @@ export const config = {
       return { body: themeCSS(d.theme), mime: "text/css", name: "theme.css" };
     if (format === "svg")
       return {
-        body: embedSVGFonts(graphic(d)),
+        body: embedSVGFonts(graphic(d,appearance)).replace(/(<svg[^>]*>)/,'$1<style>'+publicFontCSS()+'</style><metadata>'+escapeHTML(publicFontLicense())+'</metadata>'),
         mime: "image/svg+xml",
         name: "release.svg",
       };
@@ -77,8 +82,8 @@ export const config = {
       return {
         body:
           d.graphic === "screenshot"
-            ? patternHTML(d)
-            : documentHTML(d.name, graphic(d), d.theme).replace(
+            ? patternHTML(d,{appearance})
+            : doc(d.name, graphic(d,appearance), d.theme).replace(
                 "</style>",
                 "body{padding:0;margin:0}svg{display:block}</style>",
               ),
@@ -86,7 +91,7 @@ export const config = {
       };
     if (format === "html" || format === "pdf")
       return {
-        body: documentHTML(
+        body: doc(
           d.name,
           `<h1>${escapeHTML(d.title)}</h1><p>${escapeHTML(d.description)}</p><h2>Semantic theme</h2><pre>${escapeHTML(themeCSS(d.theme))}</pre><h2>Patterns and states</h2><p>${escapeHTML(recipes.map((r) => r.name).join(", "))}</p><p>Loading, empty, error, ready, running, stopped, awaiting review, and completed are explicit props in each exported recipe. Use application state to drive them.</p><h2>Implementation notes</h2><p>${escapeHTML(d.notes)}</p>`,
           d.theme,

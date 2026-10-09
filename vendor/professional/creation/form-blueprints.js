@@ -1,8 +1,8 @@
 import validator from './form-validator.js';
 export const formRecipes = [
   {id:'yrpid-v2',title:'YRPid · identity entry',recipe:'identity-entry'},
-  {id:'go-upstream',title:'Go · upstream link builder',recipe:'link-builder'},
-  {id:'go-live',title:'Go · server-only link builder',recipe:'link-builder'}
+  {id:'go-upstream',title:'Go · historical upstream link builder',recipe:'link-builder'},
+  {id:'go-live',title:'Go · current link builder',recipe:'link-builder'}
 ];
 export function validateFormBlueprint(value) {
   const valid=validator(value);
@@ -38,5 +38,5 @@ export function createFormBlueprint(variant='yrpid-v2') {
       mode:{label:'Layout',options:[{value:'',label:'Standard'},{value:'text',label:'Text only'},{value:'gallery',label:'Gallery'},{value:'mosaic',label:'Mosaic when available'}]},
       media:{label:'Media selection',help:'Single media works with Standard or Gallery.',options:[{value:'',label:'All media'},...['1','2','3','4'].map(value=>({value,label:'Media '+value}))]},
       spoilerLabel:'Hide preview behind a spoiler',note:'These settings change the preview. Visitors still open the original post.'},
-    card:variant==='go-live'?{"title": "Go for Android", "description": "Share links to Go from your Android phone.", "version": "Version 0.2.0 \u00b7 Android 8 or later", "actionLabel": "Download Android app", "readiness": "Download not ready. This APK is unsigned. Native sign-in and automatic sharing are inactive.", "detailsLabel": "Build details", "sha256": "6a6e481eec170e9085df785c48231e50151dab0c2e589057b3534418f124001a"}:null};
+    card:null};
 }

@@ -1,9 +1,10 @@
 {
   "yrpid/style.css": {
-    "sha256": "7d51d94201f2d94f29575c50e722516c3ec2a5bc231f5aac71c6a73470539ccb",
+    "sha256": "0afc6d58d52073f1d17d13f515842dd4627a3880f4d3f50e460c0e4bad1af7d5",
     "source": "yrpid/web/style.css",
-    "sourceSha256": "199e76d041cf23a6509180de2a2bd844eb1210afea668cdf62beb566a4081a4d",
-    "adaptation": "Public OFL display fallback; app-owned display font is an explicit runtime skin input."
+    "sourceSha256": "4cc7125a80be4473ba41fa96fcc625324956e857149445464e3ec438de9ad574",
+    "adaptation": "Public OFL display fallback; app-owned display font is an explicit runtime skin input.",
+    "sourceCommit": "0145ad3cfaa53969970f72aef58127b71e4849f4"
   },
   "yrpid/identity-mark.svg": {
     "sha256": "de5ae4024389331b5755a18546d844043e23efdd1283a9c9d4f0b4d22216586a",
@@ -102,31 +103,86 @@
     "source": "go-live/vendor/foundation/web/fonts/dmsans-OFL.txt"
   },
   "go-live/style.css": {
-    "sha256": "7a6b2a39404f141cec0ad5d478aeac72bada285f3d15191173ddc2736ee559e4",
+    "sha256": "f1daa8a73a17a8087ed6eb171c1a74edf4bc1fd86128097d0b22cef0a0806f67",
     "source": "go-live/src/render.ts STYLE exact value",
-    "sourceSha256": "301242617ffaa84adcb787d94aec254feae04ecf49a07931b69377a4a4a99aef",
-    "adaptation": "Public OFL display fallback; app-owned display font is an explicit runtime skin input."
+    "sourceSha256": "4473d89e18ec1a8e8ab0f0ca9696f3c8e6a744a06fe8d454c3a5eaea15fe46f9",
+    "adaptation": "Exact current app CSS minus non-redistributable display font declaration. Public fallback is provided by the skin adapter.",
+    "sourceCommit": "df9338755f3b65d006722f543221ccee127fe863"
   },
   "go-live/brand.svg": {
     "sha256": "0c6f5c0ef9a53f93ae344108577d291614199931f882f2da24e830234b029afb",
     "source": "go-live/src/render.ts brand SVG only"
   },
   "go-live/design/pip-ui.css": {
-    "sha256": "929d6751411bfbb49331a43ec52089d0fe885bf4b7734ea0dd2ede6ba9e27904",
-    "source": "go-live/assets/design/pip-ui.css",
-    "sourceSha256": "c55af9a23566565c5e98537ca2003f0a95e8e45efc103d1c1d29f7112a76913f",
-    "adaptation": "Public OFL display fallback; app-owned display font is an explicit runtime skin input."
+    "sha256": "c55af9a23566565c5e98537ca2003f0a95e8e45efc103d1c1d29f7112a76913f",
+    "source": "preview/design-language/pip-ui.css",
+    "sourceCommit": null,
+    "adaptation": "Byte-identical shared source; font notices retained."
   },
   "go-live/design/theme-boot.js": {
     "sha256": "70164008546e1affbd2f11e1cfadaa29d491c7c4d82c24a8d9b80ff9dceef27d",
-    "source": "go-live/assets/design/theme-boot.js"
+    "source": "preview/design-language/theme-boot.js",
+    "sourceCommit": null,
+    "adaptation": "Byte-identical shared source; font notices retained."
   },
   "go-live/design/fonts/NotoSans-Regular.ttf": {
     "sha256": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
-    "source": "go-live/assets/design/fonts/NotoSans-Regular.ttf"
+    "source": "yrpid/web/fonts/NotoSans-Regular.ttf",
+    "sourceCommit": "0145ad3cfaa53969970f72aef58127b71e4849f4",
+    "adaptation": "Byte-identical shared source; font notices retained."
   },
   "go-live/design/fonts/NotoSans-LICENSE.txt": {
     "sha256": "075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125",
-    "source": "go-live/assets/design/fonts/NotoSans-LICENSE.txt"
+    "source": "yrpid/web/fonts/NotoSans-LICENSE.txt",
+    "sourceCommit": "0145ad3cfaa53969970f72aef58127b71e4849f4",
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "yrpid/design/pip-ui.css": {
+    "sha256": "c55af9a23566565c5e98537ca2003f0a95e8e45efc103d1c1d29f7112a76913f",
+    "source": "preview/design-language/pip-ui.css",
+    "sourceCommit": null,
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "yrpid/design/theme-boot.js": {
+    "sha256": "70164008546e1affbd2f11e1cfadaa29d491c7c4d82c24a8d9b80ff9dceef27d",
+    "source": "preview/design-language/theme-boot.js",
+    "sourceCommit": null,
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "yrpid/design/fonts/NotoSans-Regular.ttf": {
+    "sha256": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "source": "yrpid/web/fonts/NotoSans-Regular.ttf",
+    "sourceCommit": "0145ad3cfaa53969970f72aef58127b71e4849f4",
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "yrpid/design/fonts/NotoSans-LICENSE.txt": {
+    "sha256": "075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125",
+    "source": "yrpid/web/fonts/NotoSans-LICENSE.txt",
+    "sourceCommit": "0145ad3cfaa53969970f72aef58127b71e4849f4",
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "go-upstream/design/pip-ui.css": {
+    "sha256": "c55af9a23566565c5e98537ca2003f0a95e8e45efc103d1c1d29f7112a76913f",
+    "source": "preview/design-language/pip-ui.css",
+    "sourceCommit": null,
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "go-upstream/design/theme-boot.js": {
+    "sha256": "70164008546e1affbd2f11e1cfadaa29d491c7c4d82c24a8d9b80ff9dceef27d",
+    "source": "preview/design-language/theme-boot.js",
+    "sourceCommit": null,
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "go-upstream/design/fonts/NotoSans-Regular.ttf": {
+    "sha256": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "source": "yrpid/web/fonts/NotoSans-Regular.ttf",
+    "sourceCommit": "0145ad3cfaa53969970f72aef58127b71e4849f4",
+    "adaptation": "Byte-identical shared source; font notices retained."
+  },
+  "go-upstream/design/fonts/NotoSans-LICENSE.txt": {
+    "sha256": "075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125",
+    "source": "yrpid/web/fonts/NotoSans-LICENSE.txt",
+    "sourceCommit": "0145ad3cfaa53969970f72aef58127b71e4849f4",
+    "adaptation": "Byte-identical shared source; font notices retained."
   }
 }
