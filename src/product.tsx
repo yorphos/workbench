@@ -143,7 +143,7 @@ function BlueprintEditor({
         reviewed changes.
       </p>
       <p>Routes and content are editable here. The legacy application export remains the explicitly supported review-records adapter.</p>
-      <Field label="Preview screen"><select value={screenList[selectedIndex]?.id ?? ""} onChange={event => onChange({ ...data, blueprintScreen: event.target.value })}>
+      <Field label="Preview screen"><select aria-label="Preview screen" value={screenList[selectedIndex]?.id ?? ""} onChange={event => onChange({ ...data, blueprintScreen: event.target.value })}>
         {Array.isArray(data.blueprint?.screens) && data.blueprint.screens.filter((screen: any) => screen && typeof screen === "object").map((screen: any) => <option key={screen.id} value={screen.id}>{screen.title || screen.id}</option>)}
       </select></Field>
       {Array.isArray(data.blueprint?.screens) && data.blueprint.screens.map((screen: any, index: number) => index !== selectedIndex ? null : screen && typeof screen === "object" ? (
@@ -151,7 +151,7 @@ function BlueprintEditor({
           <legend>Screen {index + 1}: {screen.id}</legend>
           <Field label="Screen title"><input value={screen.title ?? ""} onChange={event => changeScreen(index, { title: event.target.value })} /></Field>
           <Field label="Screen route"><input value={screen.path ?? ""} onChange={event => changeScreen(index, { path: event.target.value })} /></Field>
-          <Field label="Screen recipe"><select value={screen.recipe ?? ""} onChange={event => {
+          <Field label="Screen recipe"><select aria-label="Screen recipe" value={screen.recipe ?? ""} onChange={event => {
             const recipe = catalog.recipes.find((item: any) => item.id === event.target.value);
             if (recipe) changeScreen(index, { recipe: recipe.id, recipeVersion: recipe.version, states: (Array.isArray(screen.states) ? screen.states : ["ready"]).filter((state: string) => recipe.states.includes(state)) });
           }}>{catalog.recipes.map((recipe: any) => <option key={recipe.id} value={recipe.id}>{recipe.title} · v{recipe.version}</option>)}</select></Field>
@@ -225,7 +225,6 @@ export function Preview({ data, module }: { data: any; module: string }) {
     rows = fixture.rows.filter((r: any) =>
       r.name.toLowerCase().includes(query.toLowerCase()),
     );
-  if (reverse) rows.reverse();
 
   const requested = (name: string) => () =>
     setTrace(
