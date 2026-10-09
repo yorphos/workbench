@@ -45,6 +45,21 @@
   --pf-accent-ink: #fff;
   --pf-focus: var(--pf-forest-700);
   --pf-danger: var(--pf-error-light);
+  /* Semantic roles added in 0.20.0. Products map their palette onto these; components never use palette steps. */
+  --pf-control-border: #667a6c;
+  --pf-control-radius: 7px;
+  --pf-selected: var(--pf-sage-300);
+  --pf-selected-soft: var(--pf-sage-100);
+  --pf-selected-ink: var(--pf-forest-950);
+  --pf-link: var(--pf-forest-700);
+  --pf-tile: var(--pf-cream);
+  --pf-success-bg: #e4efdb;
+  --pf-success-text: #25492d;
+  --pf-warn-bg: #f8efd5;
+  --pf-warn-text: #6b4a0b;
+  --pf-danger-bg: #f9e6e4;
+  --pf-shadow: #111b1838;
+  --pf-scrim: #111b188a;
 }
 :root[data-pf-theme='dark'] {
   color-scheme: dark;
@@ -58,4 +73,46 @@
   --pf-accent-ink: var(--pf-forest-950);
   --pf-focus: var(--pf-sage-300);
   --pf-danger: var(--pf-error-dark);
+  --pf-control-border: #86a08c;
+  --pf-selected: var(--pf-sage-300);
+  --pf-selected-soft: #a9c995;
+  --pf-selected-ink: var(--pf-forest-950);
+  --pf-link: var(--pf-sage-300);
+  --pf-tile: var(--pf-forest-800);
+  --pf-success-bg: #17301f;
+  --pf-success-text: #8fd6a0;
+  --pf-warn-bg: #33280f;
+  --pf-warn-text: #f3c76b;
+  --pf-danger-bg: #3a1f22;
+  --pf-shadow: #00000066;
+  --pf-scrim: #05090ab3;
+}
+/* data-pf-theme="system" (set by theme-boot.js) follows the device preference. */
+@media (prefers-color-scheme: dark) {
+  :root[data-pf-theme='system'] {
+    color-scheme: dark;
+    --pf-surface: var(--pf-forest-950);
+    --pf-surface-raised: var(--pf-forest-900);
+    --pf-surface-muted: var(--pf-forest-800);
+    --pf-text: var(--pf-cream);
+    --pf-muted: #a4b39f;
+    --pf-border: #3b5143;
+    --pf-accent: var(--pf-sage-300);
+    --pf-accent-ink: var(--pf-forest-950);
+    --pf-focus: var(--pf-sage-300);
+    --pf-danger: var(--pf-error-dark);
+    --pf-control-border: #86a08c;
+    --pf-selected: var(--pf-sage-300);
+    --pf-selected-soft: #a9c995;
+    --pf-selected-ink: var(--pf-forest-950);
+    --pf-link: var(--pf-sage-300);
+    --pf-tile: var(--pf-forest-800);
+    --pf-success-bg: #17301f;
+    --pf-success-text: #8fd6a0;
+    --pf-warn-bg: #33280f;
+    --pf-warn-text: #f3c76b;
+    --pf-danger-bg: #3a1f22;
+    --pf-shadow: #00000066;
+    --pf-scrim: #05090ab3;
+  }
 }

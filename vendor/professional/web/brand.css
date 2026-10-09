@@ -5,6 +5,7 @@
   gap: 10px;
   min-width: 0;
   text-decoration: none;
+  color: var(--pf-text);
   --pf-brand-ink: var(--pf-accent);
   --pf-brand-caption: var(--pf-muted);
 }
@@ -30,7 +31,7 @@
   gap: 5px;
   margin: 0;
   padding: 0;
-  font: 500 11px/14px var(--pf-font-body);
+  font: 500 12px/14px var(--pf-font-body);
   letter-spacing: 0;
   text-transform: none;
   white-space: nowrap;

@@ -130,6 +130,11 @@ function BlueprintEditor({
     [data.blueprint],
   );
   const report = validateBlueprint({ ...data.blueprint, theme: data.theme });
+  const catalog = getCatalog();
+  const screenList = Array.isArray(data.blueprint?.screens) ? data.blueprint.screens : [];
+  const selectedIndex = Math.max(0, screenList.findIndex((screen: any) => screen?.id === data.blueprintScreen));
+  const changeScreen = (index: number, patch: Record<string, unknown>) =>
+    onChange({ ...data, blueprint: { ...data.blueprint, screens: data.blueprint.screens.map((screen: any, i: number) => i === index ? { ...screen, ...patch } : screen) } });
   return (
     <>
       <p>
@@ -137,27 +142,34 @@ function BlueprintEditor({
         callbacks; the initial domain adapter supports account-owned records and
         reviewed changes.
       </p>
-      <Field label="Application blueprint">
-        <textarea
-          rows={18}
-          value={source}
-          onChange={(e) => setSource(e.target.value)}
-        />
-      </Field>
-      <button
-        type="button"
-        onClick={() => {
+      <p>Routes and content are editable here. The legacy application export remains the explicitly supported review-records adapter.</p>
+      <Field label="Preview screen"><select value={screenList[selectedIndex]?.id ?? ""} onChange={event => onChange({ ...data, blueprintScreen: event.target.value })}>
+        {Array.isArray(data.blueprint?.screens) && data.blueprint.screens.filter((screen: any) => screen && typeof screen === "object").map((screen: any) => <option key={screen.id} value={screen.id}>{screen.title || screen.id}</option>)}
+      </select></Field>
+      {Array.isArray(data.blueprint?.screens) && data.blueprint.screens.map((screen: any, index: number) => index !== selectedIndex ? null : screen && typeof screen === "object" ? (
+        <fieldset key={index} className="blueprint-screen">
+          <legend>Screen {index + 1}: {screen.id}</legend>
+          <Field label="Screen title"><input value={screen.title ?? ""} onChange={event => changeScreen(index, { title: event.target.value })} /></Field>
+          <Field label="Screen route"><input value={screen.path ?? ""} onChange={event => changeScreen(index, { path: event.target.value })} /></Field>
+          <Field label="Screen recipe"><select value={screen.recipe ?? ""} onChange={event => {
+            const recipe = catalog.recipes.find((item: any) => item.id === event.target.value);
+            if (recipe) changeScreen(index, { recipe: recipe.id, recipeVersion: recipe.version, states: (Array.isArray(screen.states) ? screen.states : ["ready"]).filter((state: string) => recipe.states.includes(state)) });
+          }}>{catalog.recipes.map((recipe: any) => <option key={recipe.id} value={recipe.id}>{recipe.title} · v{recipe.version}</option>)}</select></Field>
+        </fieldset>
+      ) : <p key={index} role="alert">Screen {index + 1} has invalid structure. Repair it in Advanced blueprint JSON.</p>)}
+      <details>
+        <summary>Advanced blueprint JSON</summary>
+        <Field label="Application blueprint"><textarea rows={18} value={source} onChange={event => setSource(event.target.value)} /></Field>
+        <button type="button" onClick={() => {
           try {
             const value = JSON.parse(source);
-            onChange({ ...data, blueprint: value });
-            setError("");
-          } catch {
-            setError("Use valid blueprint JSON.");
-          }
-        }}
-      >
-        Apply blueprint draft
-      </button>
+            const validation = validateBlueprint({ ...value, theme: data.theme });
+            if (!validation.valid) { setError([...validation.errors, ...validation.unresolved].join(" ")); return; }
+            onChange({ ...data, blueprint: value }); setError("");
+          } catch { setError("Use valid blueprint JSON."); }
+        }}>Apply blueprint draft</button>
+        {error && <p role="alert">{error}</p>}
+      </details>
       <button
         type="button"
         onClick={() =>
@@ -166,7 +178,6 @@ function BlueprintEditor({
       >
         Review current Foundation pin
       </button>
-      {error && <p role="alert">{error}</p>}
       <p>
         {report.valid
           ? "Blueprint ready for application export."
@@ -201,10 +212,20 @@ export function Preview({ data, module }: { data: any; module: string }) {
     [selected, setSelected] = useState("release"),
     [query, setQuery] = useState(""),
     [reverse, setReverse] = useState(false);
-  const fixture: any = recipeFixture(data.state),
+  const screen = module === "blueprint" && Array.isArray(data.blueprint?.screens)
+    ? data.blueprint.screens.find((item: any) => item?.id === data.blueprintScreen) ?? data.blueprint.screens[0]
+    : null;
+  const blueprintReport = module === "blueprint"
+    ? validateBlueprint({ ...data.blueprint, theme: data.theme }) : null;
+  const previewRecipe = screen?.recipe ?? data.recipe;
+  const previewState = screen && Array.isArray(screen.states) && !screen.states.includes(data.state)
+    ? screen.states[0] ?? "ready" : data.state;
+  useEffect(() => { setQuery(""); setTrace(""); setReverse(false); setSelected("release"); }, [previewRecipe, previewState, screen?.id]);
+  const fixture: any = recipeFixture(previewState),
     rows = fixture.rows.filter((r: any) =>
       r.name.toLowerCase().includes(query.toLowerCase()),
     );
+  if (reverse) rows.reverse();
 
   const requested = (name: string) => () =>
     setTrace(
@@ -237,7 +258,7 @@ export function Preview({ data, module }: { data: any; module: string }) {
         </button>
       </div>
       {code ? (
-        <pre style={{ padding: 20 }}>{componentSource(data.recipe)}</pre>
+        <pre style={{ padding: 20 }}>{componentSource(previewRecipe)}</pre>
       ) : module === "publish" && data.graphic !== "screenshot" ? (
         <img
           className="graphic-preview"
@@ -247,6 +268,11 @@ export function Preview({ data, module }: { data: any; module: string }) {
             encodeURIComponent(graphic(data))
           }
         />
+      ) : blueprintReport && !blueprintReport.valid ? (
+        <div className="creation-preview" role="alert">
+          <p>Resolve the blueprint errors before previewing this application.</p>
+          {[...blueprintReport.errors, ...blueprintReport.unresolved].map((error: string) => <p key={error}>{error}</p>)}
+        </div>
       ) : (
         <div
           className="pf-app creation-preview"
@@ -259,15 +285,15 @@ export function Preview({ data, module }: { data: any; module: string }) {
           data-pf-theme={dark ? "dark" : "light"}
         >
           <p className="preview-label">
-            Fictional state fixture · {data.state} · Foundation{" "}
+            Fictional state fixture · {previewState} · Foundation{" "}
             {getCatalog().foundationVersion}
           </p>
           <Recipe
-            key={data.recipe + data.state}
+            key={previewRecipe + previewState}
             {...fixture}
-            recipe={data.recipe}
-            title={data.title}
-            description={data.description}
+            recipe={previewRecipe}
+            title={screen?.title ?? data.title}
+            description={screen?.description ?? data.description}
             rows={rows}
             selectedId={selected}
             onSelect={setSelected}

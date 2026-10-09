@@ -31,6 +31,7 @@ export function seed(name = "Untitled interface") {
       "Inspect callback contracts and verify real domain effects before shipping.",
     graphic: "social",
     blueprint: createBlueprint(name),
+    blueprintScreen: "overview",
   };
 }
 export function normalize(v) {
@@ -56,6 +57,8 @@ export function normalize(v) {
     JSON.stringify(x.blueprint).length > 50000
   )
     throw new Error("Invalid or oversized blueprint.");
+  if (typeof x.blueprintScreen !== "string" || !/^[a-z][a-z0-9-]{0,59}$/.test(x.blueprintScreen))
+    throw new Error("Invalid blueprint preview screen.");
   return Object.fromEntries(
     [
       "name",
@@ -67,6 +70,7 @@ export function normalize(v) {
       "notes",
       "graphic",
       "blueprint",
+      "blueprintScreen",
     ].map((k) => [k, x[k]]),
   );
 }

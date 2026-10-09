@@ -1,17 +1,22 @@
 {
   "schemaVersion": 1,
-  "foundationVersion": "0.13.1",
+  "foundationVersion": "0.20.0",
   "profile": "professional-creation",
   "license": "MIT; DM Sans OFL-1.1",
-  "sourceDigest": "sha256:e3b4b47239e07071febc16f7d6d9374d0bdb20f0d2f0a7d8d52d4c091828f5d5",
+  "sourceDigest": "sha256:eeee133fc481f8863bef11f22d94670112002ff5eeeb8d5d29cc32ead0d0b5d0",
   "sources": {
     "creation/blueprint-schema.js": "49b235a08d11b8c9385e16d640329cc0d6fb559ff35fa43379b7833865788915",
     "creation/blueprint-validator.js": "80492cf2f0582555aa8a230085225ea87edfa2c87e7b52747c19cf178cebbd3b",
     "creation/blueprint.js": "463b691f25f7c26af2f4999648af1aa4b479651bf626b8c2d7d58b4d3a7655ce",
     "creation/cli.js": "d5062c5db0f2844a9dd8c0d9ced6c434a7ccef7169e48a5e028c213e1d871cb3",
+    "creation/composition-export.js": "774423617ab82bff897bbf0038c333e5987f68d907222cdf7fb8badf9cbb7a0e",
+    "creation/composition-schema.js": "f3213f3a922a64f1a69b8d19881b23edbcb0356ab01e93f6f125ab4ac9902d21",
+    "creation/composition-validator.js": "5f50effd1ac22c852cf8a1836696811213f177470a50102becac6a2f4cd99de5",
+    "creation/composition.d.ts": "b9d4cab9a1554c523c5fb412b7bc36fe38f1ccada964ec5fe8e344db488cfbe5",
+    "creation/composition.js": "9586ea03f3bd4c365c5dd4c15521cc92976388853839ec7667e58815ce5cd6fe",
     "creation/fixture.js": "44b43e9bc393f1bd302f0e110712898a7e30997bdb9b01dea38188e8596f3c25",
     "creation/preview.js": "ec8d55da4d4418f1a83bd606fde8f909cdc5539dc997ffcc01b4a2cae32f2ae0",
-    "creation/profile.json": "2f54abf68f48b06f9b1a8794f2791e86ee5182adc1764d5355f5cba4f271907d",
+    "creation/profile.json": "9d8ff9eb851885d8d51863c3df9f3af2b2eb465668f174a7949650b58d3a99a5",
     "creation/runtime.js": "370327a280ada9bccf71c0c58d3b042f566a4329380308da0e73e96cd2562d3a",
     "creation/scaffold.js": "c6223e103dabf99b23f481648de29757e82f8a49f8f7a1951ebad77d1c67b944",
     "creation/template/.env.example": "ff0153445de8dec9cf0a1731adef11854b8cc52f02d06dbb2edbed573c942390",
@@ -38,7 +43,7 @@
     "server/agent-access.js": "b82f4c24c93c0a2cda2683f2e1df77781e26c852f8dfdb6cd2a812591ca42125",
     "server/identity.js": "0396f5c1174bb05554b5cd5b54c4cd2d2d3b65f0efcaa36fc3d01556c7ed5abd",
     "shared/model.js": "e99183997bc78f8586b319f05b33fb2c6df49ee975836ab371a02031fcfb9f63",
-    "web/brand.css": "2a00f35dee5e27d713362f4b8df0c96337637c83e7b15e7c9307846374c7e16c",
+    "web/brand.css": "b9dc4a918b985fd85c6077012fd73730d861e9076c019ca28eb05c7189b26d05",
     "web/digest.js": "7943136ca889438951311e87f6c002a4a100d10b0fda77287f208ed3d544c05c",
     "web/fonts.css": "8f67d940f348ff5508da545e4b3bf1d8fec9e245cf0108f4d729f91fad9043ce",
     "web/fonts/dmsans-OFL.txt": "7ec15e79c59bc14b86436a17e5eb7926b46cbcaeb08e1a7e6c110b415e6eb2a2",
@@ -47,12 +52,25 @@
     "web/fonts/font-2.ttf": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
     "web/fonts/font-3.ttf": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
     "web/foundation.css": "b140c88ccee5c277c38b08fb9fdea4fc5683d1b8099000ae5279c03282cf8fd3",
-    "web/tokens.css": "b30b7b64f23468d59c820d48f31e9caaaf265c9c3518b0fa51c6e0118db8a839"
+    "web/tokens.css": "6c47463f1f1ab5d59c0a43849ec11d6abf28bbf321b547741d06b0d723d80d8f"
   },
   "designReference": {
     "app": "Stacks",
     "commit": "580eca451efd8e1528d5617ed67f27ab234f8f37",
     "preserveProduct": true
+  },
+  "composition": {
+    "schemaVersion": 2,
+    "schema": "creation/composition-schema.js",
+    "runtime": "creation/composition.js",
+    "export": "creation/composition-export.js",
+    "surfaceOwnership": "application",
+    "supportedMounts": [
+      "native-dom",
+      "react-via-application-adapter"
+    ],
+    "implicitDomainAdapters": false,
+    "status": "pilot-requires-real-page-validation"
   },
   "runtimeProfiles": [
     {

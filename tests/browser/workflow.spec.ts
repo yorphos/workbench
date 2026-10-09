@@ -196,10 +196,41 @@ test("an account reviews exact email and attachments before one recorded send", 
 test('blueprint export composes a real application and project links reopen the saved revision',async({page})=>{
  await page.goto('app');await page.getByRole('button',{name:'New workspace',exact:true}).click();await page.getByLabel('Workspace name').fill('Blueprint pilot');await page.getByRole('button',{name:'Create workspace',exact:true}).click();await page.getByRole('button',{name:'Create a project',exact:true}).click();await page.getByRole('textbox',{name:'Project name',exact:true}).fill('Blueprint pilot');await page.getByRole('button',{name:'Create project',exact:true}).click();
  await expect(page).toHaveURL(/project=/);const url=page.url();await page.reload();await expect(page.locator('.project-heading h1')).toHaveText('Blueprint pilot');expect(page.url()).toBe(url);
- await page.getByRole('button',{name:'Blueprint',exact:true}).click();const source=JSON.parse(await page.getByLabel('Application blueprint').inputValue());source.product.mark='◇';source.screens[0].recipe='data-table';source.screens.push({id:'settings',path:'/settings',recipe:'settings',recipeVersion:1,title:'Preferences',description:'Account-owned preferences',states:['ready','stale','error']});await page.getByLabel('Application blueprint').fill(JSON.stringify(source));await page.getByRole('button',{name:'Apply blueprint draft'}).click();await expect(page.getByText('Blueprint ready for application export.')).toBeVisible();await page.getByRole('button',{name:'Save changes',exact:true}).click();await expect(page.getByText('Saved · Revision 2')).toBeVisible();
+ await page.getByRole('button',{name:'Blueprint',exact:true}).click();await page.getByText('Advanced blueprint JSON',{exact:true}).click();const source=JSON.parse(await page.getByLabel('Application blueprint').inputValue());source.product.mark='◇';source.screens[0].recipe='data-table';source.screens.push({id:'settings',path:'/settings',recipe:'settings',recipeVersion:1,title:'Preferences',description:'Account-owned preferences',states:['ready','stale','error']});await page.getByLabel('Application blueprint').fill(JSON.stringify(source));await page.getByRole('button',{name:'Apply blueprint draft'}).click();await expect(page.getByText('Blueprint ready for application export.')).toBeVisible();await page.getByRole('button',{name:'Save changes',exact:true}).click();await expect(page.getByText('Saved · Revision 2')).toBeVisible();
  await page.getByRole('button',{name:'Export',exact:true}).click();const downloadPromise=page.waitForEvent('download');await page.getByRole('button',{name:'Account-owned application · ZIP',exact:true}).click();const download=await downloadPromise;const files=unzipSync(await readFile((await download.path())!));expect(JSON.parse(strFromU8(files['app-blueprint.json'])).screens).toHaveLength(5);expect(strFromU8(files['server/index.ts'])).toContain('createReviewServer');expect(files['package-lock.json']).toBeDefined();expect(strFromU8(files['src/main.tsx'])).toMatch(/act\(\s*["']propose["']/);expect(files['vendor/foundation/web/fonts/dmsans-OFL.txt']).toBeDefined();
 });
 
 test('fixture acceptance is visibly a callback request without an applied domain outcome',async({page})=>{
  await page.goto('recipes');const area=page.locator('.documentation');await page.locator('.module-card').filter({has:page.getByRole('heading',{name:'Patterns',exact:true})}).click();await area.getByLabel('Interface recipe').selectOption('change-review');await area.getByRole('button',{name:'Accept changes',exact:true}).click();await expect(area.getByRole('status')).toContainText('Fixture callback requested: records.accept. No application effect was applied.');
+});
+
+
+test('structured blueprint editing preserves valid data when an advanced draft fails', async ({ page }) => {
+  await page.goto('app');
+  await page.getByRole('button', { name: 'New workspace', exact: true }).click();
+  await page.getByLabel('Workspace name').fill('Composition editor');
+  await page.getByRole('button', { name: 'Create workspace', exact: true }).click();
+  await page.getByRole('button', { name: 'Create a project', exact: true }).click();
+  await page.getByRole('textbox', { name: 'Project name', exact: true }).fill('Safe draft');
+  await page.getByRole('button', { name: 'Create project', exact: true }).click();
+  await page.getByRole('button', { name: 'Blueprint', exact: true }).click();
+  await page.getByLabel('Screen title', { exact: true }).first().fill('Retained heading');
+  await expect(page.locator('.creation-preview').getByRole('heading', { name: 'Retained heading', exact: true })).toBeVisible();
+  await page.getByLabel('Preview screen', { exact: true }).selectOption('review');
+  await expect(page.locator('.creation-preview').getByRole('heading', { name: 'Review changes', exact: true })).toBeVisible();
+  await page.getByLabel('Preview screen', { exact: true }).selectOption('overview');
+  await page.getByText('Advanced blueprint JSON', { exact: true }).click();
+  const source = page.getByLabel('Application blueprint');
+  const valid = JSON.parse(await source.inputValue());
+  await source.fill('{broken');
+  await page.getByRole('button', { name: 'Apply blueprint draft' }).click();
+  await expect(page.getByRole('alert')).toHaveText('Use valid blueprint JSON.');
+  await expect(page.getByLabel('Screen title', { exact: true }).first()).toHaveValue('Retained heading');
+  await source.fill(JSON.stringify({ ...valid, schemaVersion: 999 }));
+  await page.getByRole('button', { name: 'Apply blueprint draft' }).click();
+  await expect(page.getByRole('alert')).toContainText('schemaVersion');
+  await expect(page.getByLabel('Screen title', { exact: true }).first()).toHaveValue('Retained heading');
+  await source.fill(JSON.stringify(valid));
+  await page.getByRole('button', { name: 'Apply blueprint draft' }).click();
+  await expect(page.getByRole('alert')).toHaveCount(0);
 });

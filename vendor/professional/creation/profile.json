@@ -46,6 +46,11 @@
     "server/agent-access.js": "server/agent-access.js",
     "web/digest.js": "web/digest.js",
     "creation/blueprint-schema.js": "professional/creation/blueprint-schema.js",
-    "creation/blueprint-validator.js": "professional/creation/blueprint-validator.js"
+    "creation/blueprint-validator.js": "professional/creation/blueprint-validator.js",
+    "creation/composition.js": "professional/creation/composition.js",
+    "creation/composition.d.ts": "professional/creation/composition.d.ts",
+    "creation/composition-schema.js": "professional/creation/composition-schema.js",
+    "creation/composition-validator.js": "professional/creation/composition-validator.js",
+    "creation/composition-export.js": "professional/creation/composition-export.js"
   }
 }
