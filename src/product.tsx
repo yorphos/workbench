@@ -13,6 +13,8 @@ import { Studio, Field } from "../vendor/professional/react/studio";
 import type { Product, EditorProps } from "../vendor/professional/react/studio";
 import { ThemeFields } from "../vendor/professional/react/theme";
 import { contrast } from "../vendor/professional/shared/model.js";
+import {FormEditor,FormPreview} from './form-editor';
+import './forms.css';
 import {
   seed,
   recipes,
@@ -20,7 +22,7 @@ import {
   componentSource,
   graphic,
 } from "../shared/recipes.js";
-function Editor({ data, onChange, module, readonly }: EditorProps) {
+function Editor({ data, onChange, module, readonly, draftKey }: EditorProps) {
   const set = (key: string, value: any) => onChange({ ...data, [key]: value });
   return (
     <fieldset disabled={readonly}>
@@ -30,7 +32,7 @@ function Editor({ data, onChange, module, readonly }: EditorProps) {
           onChange={(e) => set("name", e.target.value)}
         />
       </Field>
-      {module === "blueprint" ? (
+      {module === 'forms' ? <FormEditor data={data} onChange={onChange} module={module} readonly={readonly} draftKey={draftKey}/> : module === "blueprint" ? (
         <BlueprintEditor data={data} onChange={onChange} />
       ) : module === "theme" ? (
         <>
@@ -232,6 +234,7 @@ export function Preview({ data, module }: { data: any; module: string }) {
         name +
         ". No application effect was applied.",
     );
+  if(module==='forms')return <FormPreview blueprint={data.formBlueprint??null}/>;
   return (
     <>
       <div className="preview-controls">
@@ -327,6 +330,7 @@ const product: Product = {
       description:
         "Color, type, and proportion. Find a visual language of your own.",
     },
+    {id:'forms',name:'Shared forms',description:'Generate native identity and link-builder interfaces from bounded shared recipes.'},
     {
       id: "patterns",
       name: "Patterns",
@@ -360,7 +364,9 @@ const product: Product = {
   seed,
   Editor,
   Preview,
+  recoverDrafts: true,
   exports: [
+    {id:'form-fixture',name:'Generated shared form · ZIP'},
     { id: "application", name: "Account-owned application · ZIP" },
     { id: "blueprint", name: "Application blueprint · JSON" },
     { id: "starter", name: "Interface fixture demo · ZIP" },

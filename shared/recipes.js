@@ -8,6 +8,7 @@ import {
   createBlueprint,
   getCatalog,
 } from "../vendor/professional/creation/blueprint.js";
+import {validateFormBlueprint} from '../vendor/professional/creation/form-blueprints.js';
 const catalog = getCatalog();
 export const recipes = catalog.recipes.map((r) => ({
   ...r,
@@ -32,6 +33,7 @@ export function seed(name = "Untitled interface") {
     graphic: "social",
     blueprint: createBlueprint(name),
     blueprintScreen: "overview",
+    formBlueprint: null,
   };
 }
 export function normalize(v) {
@@ -59,6 +61,8 @@ export function normalize(v) {
     throw new Error("Invalid or oversized blueprint.");
   if (typeof x.blueprintScreen !== "string" || !/^[a-z][a-z0-9-]{0,59}$/.test(x.blueprintScreen))
     throw new Error("Invalid blueprint preview screen.");
+  if(x.formBlueprint!==null&&!validateFormBlueprint(x.formBlueprint).valid)
+    throw new Error('Invalid shared-form blueprint.');
   return Object.fromEntries(
     [
       "name",
@@ -71,6 +75,7 @@ export function normalize(v) {
       "graphic",
       "blueprint",
       "blueprintScreen",
+      "formBlueprint",
     ].map((k) => [k, x[k]]),
   );
 }

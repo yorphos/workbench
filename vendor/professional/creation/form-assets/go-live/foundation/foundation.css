@@ -1,0 +1,60 @@
+@import './tokens.css';
+@import './fonts.css';
+@import './brand.css';
+
+:root { font-synthesis: none; }
+body { font-family: var(--pf-font-body); }
+:where(button, input, select, textarea) { font-family: inherit; }
+:where(button, a, input, select, textarea, summary, [tabindex]):focus-visible {
+  outline: var(--pf-focus-width) solid var(--pf-focus);
+  outline-offset: var(--pf-focus-offset);
+}
+:where(button, input, select, textarea) { accent-color: var(--pf-accent); }
+:where(button):disabled { cursor: not-allowed; }
+.pf-control {
+  min-height: var(--pf-control-height);
+  border-radius: var(--pf-radius-sm);
+  transition: background var(--pf-duration) var(--pf-easing), border-color var(--pf-duration) var(--pf-easing);
+}
+.pf-run-status {
+  display: inline-flex; align-items: center; gap: var(--pf-space-2);
+  padding: var(--pf-space-1) var(--pf-space-2); border: 1px solid var(--pf-border);
+  border-radius: var(--pf-radius-sm); color: var(--pf-muted); font: 500 12px/1.5 var(--pf-font-body);
+}
+.pf-run-status[data-state='running'] { color: var(--pf-accent); }
+.pf-run-status[data-state='failed'], .pf-run-status[data-state='interrupted'] { color: var(--pf-danger); }
+.pf-evidence-link { text-decoration: underline; text-underline-offset: 3px; color: var(--pf-accent); overflow-wrap: anywhere; }
+.pf-feedback { border-radius: var(--pf-radius-md); padding: var(--pf-space-3) var(--pf-space-4); }
+.pf-feedback[role='alert'] { color: var(--pf-danger); border: 1px solid currentColor; }
+.pf-dialog-overlay { position: fixed; inset: 0; z-index: var(--pf-layer-modal, 100); background: #111b188a; contain: strict; }
+@media (prefers-reduced-transparency: no-preference) { .pf-dialog-overlay { backdrop-filter: blur(2px); } }
+.pf-dialog { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: var(--pf-layer-modal, 100); width: min(560px, calc(100% - 32px)); max-height: calc(100dvh - 32px); overflow: auto; padding: var(--pf-space-6); background: var(--pf-surface-raised); color: var(--pf-text); border: 1px solid var(--pf-border); border-radius: var(--pf-radius-lg); box-shadow: 0 16px 36px -6px #111b1838, 0 4px 12px -2px #111b181f; isolation: isolate; contain: paint; }
+.pf-dialog-header { display: flex; flex-direction: column; gap: var(--pf-space-2); padding-right: var(--pf-space-8); margin-bottom: var(--pf-space-5); }
+.pf-dialog-title { margin: 0; font-size: 20px; line-height: 1.3; }
+.pf-dialog-description { color: var(--pf-muted); font-size: 14px; line-height: 1.6; }
+.pf-dialog-body { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.pf-dialog-close { position: absolute; top: var(--pf-space-2); right: var(--pf-space-2); display: grid; place-items: center; width: 36px; height: 36px; padding: 0; border: 0; border-radius: var(--pf-radius-sm); background: transparent; color: var(--pf-text); }
+.pf-dialog-footer { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--pf-space-2); border-top: 1px solid var(--pf-border); margin-top: var(--pf-space-6); padding-top: var(--pf-space-4); }
+@media (pointer: coarse) { :root { --pf-control-height: 44px; } }
+@media (prefers-reduced-motion: reduce) {
+  :root { --pf-duration: 0ms; }
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+}
+
+/* Account controls are separate from product branding. */
+pf-account:empty {display:none}
+.pf-account {position:relative;font:500 12px/1.5 var(--pf-font-body);color:var(--pf-text);z-index:65}
+.pf-account summary {cursor:pointer;list-style:none;padding:8px 10px;border:1px solid var(--pf-border);border-radius:var(--pf-radius-sm);background:var(--pf-surface)}
+.pf-account summary::-webkit-details-marker {display:none}
+.pf-account summary:focus-visible,.pf-account a:focus-visible {outline:3px solid var(--pf-accent);outline-offset:3px}
+.pf-account-panel {position:absolute;right:0;top:calc(100% + 6px);padding:14px;min-width:230px;max-width:calc(100vw - 24px);display:grid;gap:10px;background:var(--pf-surface-raised);color:var(--pf-text);border:1px solid var(--pf-border);border-radius:var(--pf-radius-md);box-shadow:0 8px 32px #0002}
+.pf-account-panel span {overflow-wrap:anywhere}
+.pf-account-panel a {color:var(--pf-accent);font-weight:650}
+.pf-account-directive-section {display:grid;gap:6px;padding-top:10px;border-top:1px solid var(--pf-border)}
+.pf-account-toggle {display:flex;align-items:center;gap:8px;font-weight:650}
+.pf-account-toggle input {accent-color:var(--pf-accent)}
+.pf-account-directive-text {max-height:180px;overflow:auto;margin:4px 0 0;padding:8px;font:400 11px/1.5 var(--pf-font-mono,ui-monospace,monospace);white-space:pre-wrap;background:var(--pf-surface);border:1px solid var(--pf-border);border-radius:var(--pf-radius-sm)}
+.pf-account-status {color:var(--pf-muted);font-weight:500}
+[data-local-access][hidden] {display:none!important}
+
+.sidebar-bottom .pf-account-panel {top:auto;bottom:calc(100% + 6px);left:0;right:auto}

@@ -29,6 +29,7 @@ import {
   DialogFooter,
 } from "./dialog";
 import "./studio.css";
+import {projectDraftKey,readProjectDraft,writeProjectDraft,clearProjectDraft} from './project-drafts';
 export type Project = {
   id: string;
   workspace: string;
@@ -46,6 +47,7 @@ export type EditorProps = {
   onChange: (data: any) => void;
   module: string;
   readonly: boolean;
+  draftKey?: string;
 };
 export type Product = {
   id: string;
@@ -58,6 +60,7 @@ export type Product = {
   Editor: ComponentType<EditorProps>;
   Preview: ComponentType<{ data: any; module: string }>;
   exports: { id: string; name: string }[];
+  recoverDrafts?: boolean;
 };
 const base = import.meta.env.BASE_URL;
 const path = (value: string) => base + value;
@@ -313,8 +316,15 @@ export function Studio({ product }: { product: Product }) {
   const sessionId = useRef("");
   const requestAbort = useRef(new AbortController());
   const dirty =
-    !!project && JSON.stringify(draft) !== JSON.stringify(project.data);
+    !!project && JSON.stringify(draft) !== JSON.stringify({...product.seed(project.data.name),...project.data});
   const readonly = project?.permission === "reviewer";
+  const draftKey=product.recoverDrafts&&project&&session?.account?.id?projectDraftKey(product.id,session.account.id,project.id):undefined;
+  useEffect(()=>{
+    if(!draftKey||!project||!draft||readonly)return;
+    if(dirty)writeProjectDraft(draftKey,project.revision,draft);
+    // A clean draft may still have an invalid raw form draft. Preserve it until
+    // explicit discard; revision checks prevent it becoming valid content.
+  },[draftKey,project?.revision,draft,dirty,readonly]);
   async function api(url: string, method = "GET", value?: any) {
     const response = await fetch(path(url), {
       method,
@@ -377,7 +387,9 @@ export function Studio({ product }: { product: Product }) {
     setProject(p);
     setWorkspace(p.workspace);
     remember(p.workspace,p.id);
-    setDraft({...product.seed(p.data.name),...structuredClone(p.data)});
+    const recovered=product.recoverDrafts&&sessionId.current&&p.permission!=='reviewer'?readProjectDraft(projectDraftKey(product.id,sessionId.current,p.id),p.revision):null;
+    setDraft({...product.seed(p.data.name),...structuredClone(recovered||p.data)});
+    if(recovered)setNotice('Recovered a local draft for this account and project. Review it before saving.');
     setJob(null);
   }
   async function refreshProject() {
@@ -491,6 +503,7 @@ export function Studio({ product }: { product: Product }) {
   return (
     <>
       <Header product={product} email={session.account.email} />
+      {project&&product.recoverDrafts&&<a className="editor-jump" href="#project-editor">Skip to editor</a>}
       <div className="workspace-shell">
         <aside className="workspace-sidebar">
           <div className="sidebar-heading">YOUR WORKSPACE</div>
@@ -639,6 +652,7 @@ export function Studio({ product }: { product: Product }) {
                               { revision: project.revision, data: draft },
                             );
                             setProject({ ...project, ...p });
+                            if(draftKey)clearProjectDraft(draftKey,project.revision);
                             setDraft({...product.seed(p.data.name),...structuredClone(p.data)});
                             setNotice("Changes saved.");
                             setProjects(
@@ -649,6 +663,7 @@ export function Studio({ product }: { product: Product }) {
                       >
                         <Check size={16} /> Save changes
                       </button>
+                      {product.recoverDrafts&&dirty&&<button type="button" onClick={()=>{if(draftKey)clearProjectDraft(draftKey,project.revision);setDraft({...product.seed(project.data.name),...structuredClone(project.data)});setNotice('Local draft discarded. Saved content restored.');}}>Discard local draft</button>}
                       <button
                         disabled={busy || dirty}
                         onClick={() =>
@@ -840,7 +855,7 @@ export function Studio({ product }: { product: Product }) {
                 </section>
               ) : (
                 <div className="editor-layout">
-                  <section className="editor-panel">
+                  <section className="editor-panel" id="project-editor" tabIndex={-1}>
                     <div className="panel-heading">
                       <Settings size={16} />
                       <h2>
@@ -853,6 +868,7 @@ export function Studio({ product }: { product: Product }) {
                       onChange={setDraft}
                       module={module}
                       readonly={!!readonly}
+                      draftKey={draftKey&&!readonly?draftKey+':r'+project.revision:undefined}
                     />
                   </section>
                   <section className="preview-panel">

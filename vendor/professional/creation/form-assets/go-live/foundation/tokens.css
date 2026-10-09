@@ -1,0 +1,118 @@
+/* YRP family palette. Product layouts, marks and display typography stay local. */
+:root {
+  --pf-forest-950: #111b18;
+  --pf-forest-900: #192722;
+  --pf-forest-800: #263a30;
+  --pf-forest-700: #315849;
+  --pf-sage-600: #53775c;
+  --pf-sage-400: #95b181;
+  --pf-sage-300: #c1dba7;
+  --pf-sage-100: #e6eddf;
+  --pf-paper: #f8f7f2;
+  --pf-cream: #eef0e5;
+  --pf-gold: #d2b786;
+  --pf-terra: #daaa91;
+  --pf-error-light: #a43235;
+  --pf-error-dark: #efa4a1;
+  --pf-font-body: 'DM Sans', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --pf-font-mono: ui-monospace, 'SFMono-Regular', Consolas, monospace;
+  --pf-space-1: 4px;
+  --pf-space-2: 8px;
+  --pf-space-3: 12px;
+  --pf-space-4: 16px;
+  --pf-space-5: 20px;
+  --pf-space-6: 24px;
+  --pf-space-8: 32px;
+  --pf-space-10: 40px;
+  --pf-radius-sm: 6px;
+  --pf-radius-md: 10px;
+  --pf-radius-lg: 16px;
+  --pf-duration: 160ms;
+  --pf-easing: cubic-bezier(.2, .7, .2, 1);
+  --pf-focus-width: 2px;
+  --pf-focus-offset: 3px;
+  --pf-control-height: 40px;
+  --pf-header-height-desktop: 76px;
+  --pf-header-height-mobile: 60px;
+  --pf-sidebar-width: 240px;
+  --pf-surface: var(--pf-paper);
+  --pf-surface-raised: #fff;
+  --pf-surface-muted: var(--pf-sage-100);
+  --pf-text: #283b31;
+  --pf-muted: #5d6e61;
+  --pf-border: #d7ded1;
+  --pf-accent: var(--pf-forest-700);
+  --pf-accent-ink: #fff;
+  --pf-focus: var(--pf-forest-700);
+  --pf-danger: var(--pf-error-light);
+  /* Semantic roles added in 0.20.0. Products map their palette onto these; components never use palette steps. */
+  --pf-control-border: #667a6c;
+  --pf-control-radius: 7px;
+  --pf-selected: var(--pf-sage-300);
+  --pf-selected-soft: var(--pf-sage-100);
+  --pf-selected-ink: var(--pf-forest-950);
+  --pf-link: var(--pf-forest-700);
+  --pf-tile: var(--pf-cream);
+  --pf-success-bg: #e4efdb;
+  --pf-success-text: #25492d;
+  --pf-warn-bg: #f8efd5;
+  --pf-warn-text: #6b4a0b;
+  --pf-danger-bg: #f9e6e4;
+  --pf-shadow: #111b1838;
+  --pf-scrim: #111b188a;
+}
+:root[data-pf-theme='dark'] {
+  color-scheme: dark;
+  --pf-surface: var(--pf-forest-950);
+  --pf-surface-raised: var(--pf-forest-900);
+  --pf-surface-muted: var(--pf-forest-800);
+  --pf-text: var(--pf-cream);
+  --pf-muted: #a4b39f;
+  --pf-border: #3b5143;
+  --pf-accent: var(--pf-sage-300);
+  --pf-accent-ink: var(--pf-forest-950);
+  --pf-focus: var(--pf-sage-300);
+  --pf-danger: var(--pf-error-dark);
+  --pf-control-border: #86a08c;
+  --pf-selected: var(--pf-sage-300);
+  --pf-selected-soft: #a9c995;
+  --pf-selected-ink: var(--pf-forest-950);
+  --pf-link: var(--pf-sage-300);
+  --pf-tile: var(--pf-forest-800);
+  --pf-success-bg: #17301f;
+  --pf-success-text: #8fd6a0;
+  --pf-warn-bg: #33280f;
+  --pf-warn-text: #f3c76b;
+  --pf-danger-bg: #3a1f22;
+  --pf-shadow: #00000066;
+  --pf-scrim: #05090ab3;
+}
+/* data-pf-theme="system" (set by theme-boot.js) follows the device preference. */
+@media (prefers-color-scheme: dark) {
+  :root[data-pf-theme='system'] {
+    color-scheme: dark;
+    --pf-surface: var(--pf-forest-950);
+    --pf-surface-raised: var(--pf-forest-900);
+    --pf-surface-muted: var(--pf-forest-800);
+    --pf-text: var(--pf-cream);
+    --pf-muted: #a4b39f;
+    --pf-border: #3b5143;
+    --pf-accent: var(--pf-sage-300);
+    --pf-accent-ink: var(--pf-forest-950);
+    --pf-focus: var(--pf-sage-300);
+    --pf-danger: var(--pf-error-dark);
+    --pf-control-border: #86a08c;
+    --pf-selected: var(--pf-sage-300);
+    --pf-selected-soft: #a9c995;
+    --pf-selected-ink: var(--pf-forest-950);
+    --pf-link: var(--pf-sage-300);
+    --pf-tile: var(--pf-forest-800);
+    --pf-success-bg: #17301f;
+    --pf-success-text: #8fd6a0;
+    --pf-warn-bg: #33280f;
+    --pf-warn-text: #f3c76b;
+    --pf-danger-bg: #3a1f22;
+    --pf-shadow: #00000066;
+    --pf-scrim: #05090ab3;
+  }
+}

@@ -1,0 +1,132 @@
+{
+  "yrpid/style.css": {
+    "sha256": "7d51d94201f2d94f29575c50e722516c3ec2a5bc231f5aac71c6a73470539ccb",
+    "source": "yrpid/web/style.css",
+    "sourceSha256": "199e76d041cf23a6509180de2a2bd844eb1210afea668cdf62beb566a4081a4d",
+    "adaptation": "Public OFL display fallback; app-owned display font is an explicit runtime skin input."
+  },
+  "yrpid/identity-mark.svg": {
+    "sha256": "de5ae4024389331b5755a18546d844043e23efdd1283a9c9d4f0b4d22216586a",
+    "source": "yrpid/web/identity-mark.svg"
+  },
+  "yrpid/fonts/NotoSans-Regular.ttf": {
+    "sha256": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "source": "yrpid/web/fonts/NotoSans-Regular.ttf"
+  },
+  "yrpid/fonts/NotoSans-LICENSE.txt": {
+    "sha256": "075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125",
+    "source": "yrpid/web/fonts/NotoSans-LICENSE.txt"
+  },
+  "yrpid/welcome.svg": {
+    "sha256": "b960df7dcaadb05c18cf6823eb396044bb7998577a0ad34f19da1383df23e155",
+    "source": "yrpid/web/sign-in.html SVG-only welcome artwork"
+  },
+  "go-upstream/foundation/foundation.css": {
+    "sha256": "b140c88ccee5c277c38b08fb9fdea4fc5683d1b8099000ae5279c03282cf8fd3",
+    "source": "go-upstream/vendor/foundation/web/foundation.css"
+  },
+  "go-upstream/foundation/tokens.css": {
+    "sha256": "b30b7b64f23468d59c820d48f31e9caaaf265c9c3518b0fa51c6e0118db8a839",
+    "source": "go-upstream/vendor/foundation/web/tokens.css"
+  },
+  "go-upstream/foundation/fonts.css": {
+    "sha256": "8f67d940f348ff5508da545e4b3bf1d8fec9e245cf0108f4d729f91fad9043ce",
+    "source": "go-upstream/vendor/foundation/web/fonts.css"
+  },
+  "go-upstream/foundation/brand.css": {
+    "sha256": "b9dc4a918b985fd85c6077012fd73730d861e9076c019ca28eb05c7189b26d05",
+    "source": "go-upstream/vendor/foundation/web/brand.css"
+  },
+  "go-upstream/foundation/fonts/font-0.ttf": {
+    "sha256": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+    "source": "go-upstream/vendor/foundation/web/fonts/font-0.ttf"
+  },
+  "go-upstream/foundation/fonts/font-1.ttf": {
+    "sha256": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+    "source": "go-upstream/vendor/foundation/web/fonts/font-1.ttf"
+  },
+  "go-upstream/foundation/fonts/font-2.ttf": {
+    "sha256": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+    "source": "go-upstream/vendor/foundation/web/fonts/font-2.ttf"
+  },
+  "go-upstream/foundation/fonts/font-3.ttf": {
+    "sha256": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+    "source": "go-upstream/vendor/foundation/web/fonts/font-3.ttf"
+  },
+  "go-upstream/foundation/fonts/dmsans-OFL.txt": {
+    "sha256": "7ec15e79c59bc14b86436a17e5eb7926b46cbcaeb08e1a7e6c110b415e6eb2a2",
+    "source": "go-upstream/vendor/foundation/web/fonts/dmsans-OFL.txt"
+  },
+  "go-upstream/style.css": {
+    "sha256": "ee72ef6f815be7e07b705142cb5b91e145a45eb5d40ea40556ed1233b5ca0804",
+    "source": "go-upstream/src/render.ts STYLE exact value"
+  },
+  "go-upstream/brand.svg": {
+    "sha256": "0c6f5c0ef9a53f93ae344108577d291614199931f882f2da24e830234b029afb",
+    "source": "go-upstream/src/render.ts brand SVG only"
+  },
+  "go-live/foundation/foundation.css": {
+    "sha256": "b140c88ccee5c277c38b08fb9fdea4fc5683d1b8099000ae5279c03282cf8fd3",
+    "source": "go-live/vendor/foundation/web/foundation.css"
+  },
+  "go-live/foundation/tokens.css": {
+    "sha256": "6c47463f1f1ab5d59c0a43849ec11d6abf28bbf321b547741d06b0d723d80d8f",
+    "source": "go-live/vendor/foundation/web/tokens.css"
+  },
+  "go-live/foundation/fonts.css": {
+    "sha256": "8f67d940f348ff5508da545e4b3bf1d8fec9e245cf0108f4d729f91fad9043ce",
+    "source": "go-live/vendor/foundation/web/fonts.css"
+  },
+  "go-live/foundation/brand.css": {
+    "sha256": "b9dc4a918b985fd85c6077012fd73730d861e9076c019ca28eb05c7189b26d05",
+    "source": "go-live/vendor/foundation/web/brand.css"
+  },
+  "go-live/foundation/fonts/font-0.ttf": {
+    "sha256": "b0ae3e89a7d3ef2b1838bb4b1ceb0b17cc3435af061eee809d76aa623ff116e9",
+    "source": "go-live/vendor/foundation/web/fonts/font-0.ttf"
+  },
+  "go-live/foundation/fonts/font-1.ttf": {
+    "sha256": "376427b5322148d8de1e03f263bcca4935a2d60ba71d9f94f4947ab664c711ae",
+    "source": "go-live/vendor/foundation/web/fonts/font-1.ttf"
+  },
+  "go-live/foundation/fonts/font-2.ttf": {
+    "sha256": "b79a2ea7a38f33fd96a282fadb9ce97626bb0724a44d21075859f0e50239993a",
+    "source": "go-live/vendor/foundation/web/fonts/font-2.ttf"
+  },
+  "go-live/foundation/fonts/font-3.ttf": {
+    "sha256": "2a8e7f713ee79fbccdef3cef5c787aff47580299f7da60144961e7db2ec08211",
+    "source": "go-live/vendor/foundation/web/fonts/font-3.ttf"
+  },
+  "go-live/foundation/fonts/dmsans-OFL.txt": {
+    "sha256": "7ec15e79c59bc14b86436a17e5eb7926b46cbcaeb08e1a7e6c110b415e6eb2a2",
+    "source": "go-live/vendor/foundation/web/fonts/dmsans-OFL.txt"
+  },
+  "go-live/style.css": {
+    "sha256": "7a6b2a39404f141cec0ad5d478aeac72bada285f3d15191173ddc2736ee559e4",
+    "source": "go-live/src/render.ts STYLE exact value",
+    "sourceSha256": "301242617ffaa84adcb787d94aec254feae04ecf49a07931b69377a4a4a99aef",
+    "adaptation": "Public OFL display fallback; app-owned display font is an explicit runtime skin input."
+  },
+  "go-live/brand.svg": {
+    "sha256": "0c6f5c0ef9a53f93ae344108577d291614199931f882f2da24e830234b029afb",
+    "source": "go-live/src/render.ts brand SVG only"
+  },
+  "go-live/design/pip-ui.css": {
+    "sha256": "929d6751411bfbb49331a43ec52089d0fe885bf4b7734ea0dd2ede6ba9e27904",
+    "source": "go-live/assets/design/pip-ui.css",
+    "sourceSha256": "c55af9a23566565c5e98537ca2003f0a95e8e45efc103d1c1d29f7112a76913f",
+    "adaptation": "Public OFL display fallback; app-owned display font is an explicit runtime skin input."
+  },
+  "go-live/design/theme-boot.js": {
+    "sha256": "70164008546e1affbd2f11e1cfadaa29d491c7c4d82c24a8d9b80ff9dceef27d",
+    "source": "go-live/assets/design/theme-boot.js"
+  },
+  "go-live/design/fonts/NotoSans-Regular.ttf": {
+    "sha256": "89c3c497f618fdaa0b2d1e98fef93582f28c71debd2c4a8cdf41f190ced2909d",
+    "source": "go-live/assets/design/fonts/NotoSans-Regular.ttf"
+  },
+  "go-live/design/fonts/NotoSans-LICENSE.txt": {
+    "sha256": "075f91382875da1c4b491f1facf2586f55448705133264d98ce15cab6211b125",
+    "source": "go-live/assets/design/fonts/NotoSans-LICENSE.txt"
+  }
+}

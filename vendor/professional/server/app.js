@@ -168,6 +168,14 @@ export function createStudio(
         });
         return res.end(readFileSync(join(dist, "index.html")));
       }
+      // Optional bounded interface preview. It retains the existing verified
+      // account gate and read-only method policy; no native app service is called.
+      if (config.formRoute && path.startsWith('/api/form-') && (method === 'GET'||(path==='/api/form-preview'&&method==='POST'))) {
+        const output=await config.formRoute({path,url,base,method,input:method==='POST'?await body(req):undefined});
+        requireThat(output,404,'Interface preview unavailable.');
+        res.writeHead(200,{'Content-Type':output.mime,'Cache-Control':'private, no-store','X-Content-Type-Options':'nosniff'});
+        return res.end(output.body);
+      }
       if (path === "/api/session" && method === "GET")
         return json(res, {
           account: { id: a.id, email: a.email },

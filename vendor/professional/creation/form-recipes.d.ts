@@ -1,0 +1,11 @@
+import type {ReactNode,ReactElement} from 'react';
+export type CopyField={label:string;help:string};
+export type IdentityBlueprint={schemaVersion:1;recipeVersion:1;recipe:'identity-entry';variant:'yrpid-v2';title:string;description:string;eyebrow:string;passkeyLabel:string;emailActionLabel:string;divider:string;note:string;footer:string;email:CopyField;welcome:{caption:string;description:string};help:{summary:string;paragraphs:string[]}};
+export type LinkBlueprint={schemaVersion:1;recipeVersion:1;recipe:'link-builder';variant:'go-upstream'|'go-live';title:string;description:string;actionLabel:string;ownershipNote:string;url:{label:string;placeholder:string;maxLength:number};configuration:{summary:string;legend:string;note:string;language:CopyField&{placeholder:string;maxLength:12};mode:{label:string;options:{value:''|'text'|'gallery'|'mosaic';label:string}[]};media:CopyField&{options:{value:''|'1'|'2'|'3'|'4';label:string}[]};spoilerLabel:string};card:null|{title:string;description:string;version:string;actionLabel:string;readiness:string;detailsLabel:string;sha256:string}};
+export type FormBlueprint=IdentityBlueprint|LinkBlueprint;
+export function FormPage(props:{blueprint:FormBlueprint;slots?:{welcomeArtwork?:ReactNode;brandMark?:ReactNode;cardIcon?:ReactNode};assetBase?:string}):ReactElement;
+export function FormField(props:Record<string,unknown>&{id:string;label:string}):ReactElement;
+export function FormAction(props:Record<string,unknown>&{label:string}):ReactElement;
+export function FormStatus(props:Record<string,unknown>):ReactElement;
+export function FormDisclosure(props:Record<string,unknown>&{summary:string;children?:ReactNode}):ReactElement;
+export function FormCard(props:Record<string,unknown>&{children?:ReactNode}):ReactElement;

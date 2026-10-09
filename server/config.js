@@ -9,6 +9,7 @@ import { buildScaffold } from "../vendor/professional/creation/scaffold.js";
 import { seed, normalize, recipes, graphic } from "../shared/recipes.js";
 import { embedSVGFonts } from "../vendor/professional/server/fonts.js";
 import { zipSync } from "fflate";
+import {buildFormExport,renderFormDocument,formFixtureScript,formAsset} from '../vendor/professional/creation/form-export.js';
 import {
   themeCSS,
   documentHTML,
@@ -31,8 +32,21 @@ export const config = {
     }),
   extras: starterFiles,
   registry,
+  formRoute({path,base,method,input}) {
+    try {
+      if(path==='/api/form-preview'&&method==='POST')return {body:renderFormDocument(input,{assetBase:base+'api/form-assets/',fixtureURL:base+'api/form-fixture.js'}),mime:'text/html'};
+      if(path==='/api/form-fixture.js')return {body:formFixtureScript(),mime:'text/javascript'};
+      if(path.startsWith('/api/form-assets/')) {
+        const name=path.slice('/api/form-assets/'.length);
+        const extension=name.split('.').at(-1);
+        return {body:formAsset(name),mime:({css:'text/css',js:'text/javascript',svg:'image/svg+xml',woff2:'font/woff2',ttf:'font/ttf'})[extension]||'text/plain'};
+      }
+      return null;
+    }catch(error){error.status=400;throw error;}
+  },
   export(p, format) {
     const d = p.data;
+    if(format==='form-fixture')return {body:Buffer.from(zipSync(buildFormExport(d.formBlueprint))),mime:'application/zip',name:'generated-form-fixture.zip'};
     if (format === "application")
       return {
         body: Buffer.from(zipSync(buildScaffold(projectBlueprint(d)))),

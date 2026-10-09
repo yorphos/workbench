@@ -1,0 +1,60 @@
+/* Public fixture skin derived from the YRP Pip v2 profile.
+   Canonical derived copy: Foundation creation/form-assets (see manifest hashes).
+   Scope: add class "pip-ui" to the app root (body). App-specific layout stays in the app's CSS.
+   Display/UI fonts default to OFL Noto Sans; app-owned display fonts are runtime inputs.
+   Maps the Pip palette onto Foundation's --pf-* roles; control borders are 3:1 (#7A8594);
+   dark follows <html data-pf-theme="dark|system"> (Foundation theme-boot.js). */
+.pip-ui,.pip-studio,.pip-site,.pip-lab,.nimbus-demo{
+  color-scheme:light;
+  --pip-paper:#fffcf5;--pip-ink:#25253e;--pip-sun:#ffd653;--pip-sky:#78cef4;--pip-coral:#f37b62;--pip-leaf:#93cc74;
+  --pip-sky-tint:#dcf2ff;--pip-pale-sun:#fff0b6;--pip-coral-ink:#b3402c;--pip-leaf-ink:#3f7a28;
+  --pip-font-display:'Noto Sans',system-ui,sans-serif;
+  --pip-font-ui:'Noto Sans',system-ui,-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  --pip-focus-width:3px;--pip-focus-offset:3px;--pip-target:44px;
+  --pf-surface:#fffcf5;--pf-surface-raised:#fff;--pf-surface-muted:#f1f2ec;
+  --pf-text:#25253e;--pf-muted:#64666e;--pf-border:#c6ccd1;--pf-control-border:#7a8594;
+  --pf-accent:#25253e;--pf-accent-ink:#fff;--pf-focus:#1768a6;--pf-link:#1768a6;
+  --pf-danger:#a33228;--pf-danger-bg:#fcebe7;
+  --pf-selected:#ffd653;--pf-selected-soft:#fff0b6;--pf-selected-ink:#25253e;
+  --pf-success-bg:#ebf2e7;--pf-success-text:#25253e;--pf-warn-bg:#fff6d6;--pf-warn-text:#8a5a00;
+  --pf-shadow:#25253e22;--pf-scrim:rgb(31 35 48/.48);
+  --pf-button-border:var(--pf-control-border);--pf-button-weight:400;--pf-selected-weight:600;
+  --pf-button-radius:14px;--pf-input-radius:10px;--pf-control-radius:12px;--pf-tile-radius:14px;--pf-modal-radius:24px;
+  --pf-focus-width:var(--pip-focus-width);--pf-focus-offset:var(--pip-focus-offset);
+  --pf-header-height-desktop:78px;--pf-header-height-mobile:70px;
+  --pf-font-body:var(--pip-font-ui);
+  color:var(--pf-text);background:var(--pf-surface);font:14px/1.5 var(--pf-font-body);font-synthesis:none;
+}
+@media(prefers-color-scheme:dark){
+  :root[data-pf-theme='system'] :is(.pip-ui,.pip-studio,.pip-site,.pip-lab){
+    color-scheme:dark;--pf-surface:#17172b;--pf-surface-raised:#25253e;--pf-surface-muted:#1f1f36;
+    --pf-text:#fffcf5;--pf-muted:#b9bbc8;--pf-border:#3f4060;--pf-control-border:#8487a3;
+    --pf-accent:#ffd653;--pf-accent-ink:#25253e;--pf-focus:#78cef4;--pf-link:#78cef4;
+    --pf-danger:#ff9c8a;--pf-danger-bg:#3a2230;--pf-selected-soft:#f2cf5c;
+    --pf-success-bg:#233a33;--pf-success-text:#bdebc9;--pf-warn-bg:#33280f;--pf-warn-text:#ffc977;
+    --pf-shadow:#00000066;--pf-scrim:rgb(5 5 15/.66);--pip-sky-tint:#2a2a45;--pip-pale-sun:#33280f;
+  }
+}
+:root[data-pf-theme='dark'] :is(.pip-ui,.pip-studio,.pip-site,.pip-lab){
+  color-scheme:dark;--pf-surface:#17172b;--pf-surface-raised:#25253e;--pf-surface-muted:#1f1f36;
+  --pf-text:#fffcf5;--pf-muted:#b9bbc8;--pf-border:#3f4060;--pf-control-border:#8487a3;
+  --pf-accent:#ffd653;--pf-accent-ink:#25253e;--pf-focus:#78cef4;--pf-link:#78cef4;
+  --pf-danger:#ff9c8a;--pf-danger-bg:#3a2230;--pf-selected-soft:#f2cf5c;
+  --pf-success-bg:#233a33;--pf-success-text:#bdebc9;--pf-warn-bg:#33280f;--pf-warn-text:#ffc977;
+  --pf-shadow:#00000066;--pf-scrim:rgb(5 5 15/.66);--pip-sky-tint:#2a2a45;--pip-pale-sun:#33280f;
+}
+/* Brand: Nimbus mark + "by YRP" signature; display face for names and headings. */
+.pip-ui .pf-brand{--pf-brand-ink:var(--pf-link);--pf-brand-caption:var(--pf-muted)}
+.pip-ui :is(h1,h2,.pf-brand-name){font-family:var(--pip-font-display);font-weight:550;font-variation-settings:'opsz' 48;letter-spacing:-.025em;font-synthesis:none}
+.pip-ui .pf-brand-name{font-size:30px;line-height:1;font-variation-settings:'opsz' 72}
+.pip-ui .pf-brand-signature{font-size:12px}
+.pip-ui :is(button,input,select,textarea){font:inherit}
+.pip-ui :is(button,select,summary,input:not([type=checkbox]):not([type=radio])){min-height:var(--pip-target)}
+.pip-ui :is(button,input,select,textarea,a,summary):focus-visible{outline:var(--pip-focus-width) solid var(--pf-focus);outline-offset:var(--pip-focus-offset)}
+.pip-ui :is(input:not([type=checkbox]):not([type=radio]),select,textarea){border:1px solid var(--pf-control-border);border-radius:var(--pf-input-radius);background:var(--pf-surface-raised);color:var(--pf-text)}
+.pip-ui :is(input,textarea)::placeholder{color:var(--pf-muted)}
+.pip-ui :is(code,.metric-value){font-variant-numeric:tabular-nums slashed-zero}
+.pip-ui ::selection{background:var(--pf-selected);color:var(--pf-selected-ink)}
+@media(max-width:720px){.pip-ui .pf-brand-name{font-size:26px}}
+@media(prefers-reduced-motion:reduce){.pip-ui *{scroll-behavior:auto;animation:none!important;transition:none!important}}
+@media(forced-colors:active){.pip-ui :focus-visible{outline-color:Highlight}}
